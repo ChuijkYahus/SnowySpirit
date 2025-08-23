@@ -59,7 +59,7 @@ public class ModRegistry {
 
     private static void registerSledItems(Registrator<Item> event, Collection<WoodType> woodTypes) {
         for (WoodType wood : woodTypes) {
-            if (wood.canBurn()) {
+            if (wood.canBurn() || SnowySpirit.BOATLOAD_INSTALLED) {
                 String name = wood.getVariantId(SLED_NAME);
                 SledItem item = new SledItem(wood);
                 event.register(SnowySpirit.res(name), item);
@@ -69,6 +69,7 @@ public class ModRegistry {
         }
     }
 
+    @Deprecated(forRemoval = true)
     public static final Supplier<EntityDataSerializer<WoodType>> WOOD_TYPE_SERIALIZER =
             RegHelper.registerEntityDataSerializer(SnowySpirit.res("wood_type"),
                     () -> EntityDataSerializer.forValueType(WoodType.STREAM_CODEC));

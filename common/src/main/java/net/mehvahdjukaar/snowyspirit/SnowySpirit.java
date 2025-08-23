@@ -12,6 +12,7 @@ import net.mehvahdjukaar.snowyspirit.dynamicpack.ServerDynamicResourcesHandler;
 import net.mehvahdjukaar.snowyspirit.integration.FDCompat;
 import net.mehvahdjukaar.snowyspirit.integration.SeasonModCompat;
 import net.mehvahdjukaar.snowyspirit.reg.*;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
@@ -36,22 +37,22 @@ public class SnowySpirit {
     public static final boolean SUPPLEMENTARIES_INSTALLED = PlatHelper.isModLoaded("supplementaries");
     public static final boolean FARMERSDELIGHT_INSTALLED = PlatHelper.isModLoaded("farmersdelight");
     public static final boolean SEASON_MOD_INSTALLED = PlatHelper.isModLoaded(PlatHelper.getPlatform().isForge() ? "sereneseasons" : "seasons");
+    public static final boolean BOATLOAD_INSTALLED = PlatHelper.isModLoaded("boatload");
 
 
     public static void commonInit() {
 
+        // ginger bread golem glitchy leaves blocks
         //TODO: check wolf height
         // add item burntime
         // add block burn time
         //TODO: mongo screen rotation
-        //
+        //slime in gumdrop
         //hostile gingeerbread golems
         //mongo
-        //sleds loose their chest
         //TODO: sync xRot, chest weight, tweak values
         //TODO: nerf sled acceleration without wolf to make wolf more relevant. can still be used for downhill descent
         //TODO: maybe make friction delend also on xRot to better handle slope descent
-
 
         CommonConfigs.init();
 

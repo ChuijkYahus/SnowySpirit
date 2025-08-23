@@ -124,9 +124,7 @@ public class GlowLightParticle extends TextureSheetParticle {
                 .setLight(lightColor);
     }
 
-    private static final ParticleRenderType RT =
-            PlatHelper.getPlatform().isFabric() ? ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT :
-            MLRenderTypes.PARTICLE_ADDITIVE_TRANSLUCENCY_RENDER_TYPE;
+    private static final ParticleRenderType RT = MLRenderTypes.PARTICLE_ADDITIVE_TRANSLUCENCY_RENDER_TYPE;
 
     @Override
     public ParticleRenderType getRenderType() {

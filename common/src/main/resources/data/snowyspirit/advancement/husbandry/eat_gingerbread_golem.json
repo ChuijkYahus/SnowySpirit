@@ -13,7 +13,8 @@
     "frame": "task",
     "hidden": true,
     "icon": {
-      "item": "snowyspirit:gingerbread_cookie"
+      "count": 1,
+      "id": "snowyspirit:gingerbread_cookie"
     },
     "show_toast": true,
     "title": {
