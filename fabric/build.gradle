@@ -31,7 +31,7 @@ dependencies {
         modImplementation("net.mehvahdjukaar:moonlight-fabric:${moonlight_version}")
         //modImplementation("curse.maven:selene-499980:5913547")
     } else {
-        modImplementation("curse.maven:selene-499980:5913547")
+        modImplementation("curse.maven:selene-499980:7068423")
     }
 
     modImplementation("curse.maven:yacl-667299:4574163")

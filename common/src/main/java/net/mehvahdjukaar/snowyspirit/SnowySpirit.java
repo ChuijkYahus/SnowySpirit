@@ -55,7 +55,7 @@ public class SnowySpirit {
 
         CommonConfigs.init();
 
-        ServerDynamicResourcesHandler.INSTANCE.register();
+        RegHelper.registerDynamicResourceProvider(ServerDynamicResourcesHandler.INSTANCE);
 
         ModNetworking.init();
 
@@ -73,7 +73,7 @@ public class SnowySpirit {
         if (PlatHelper.getPhysicalSide().isClient()) {
             ClientConfigs.init();
 
-            ClientDynamicResourcesHandler.INSTANCE.register();
+            RegHelper.registerDynamicResourceProvider(ClientDynamicResourcesHandler.INSTANCE);
 
             ClientRegistry.init();
             ClientHelper.addClientSetup(ClientRegistry::setup);

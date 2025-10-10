@@ -101,7 +101,7 @@ dependencies {
        // modCompileOnly("curse.maven:supplementaries-412082:5923343")
     //    modImplementation("net.mehvahdjukaar:supplementaries-neoforge:${supplementaries_version}")
     } else {
-        modImplementation("curse.maven:selene-499980:5878698")
+        modImplementation("curse.maven:selene-499980:7068422")
       //  modCompileOnly("curse.maven:supplementaries-412082:5923343")
     }
 

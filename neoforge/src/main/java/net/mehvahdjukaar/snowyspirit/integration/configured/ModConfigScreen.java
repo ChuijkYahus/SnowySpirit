@@ -5,6 +5,7 @@ import com.mrcrayfish.configured.api.IModConfig;
 import com.mrcrayfish.configured.client.util.ScreenUtil;
 import net.mehvahdjukaar.moonlight.api.integration.configured.CustomConfigScreen;
 import net.mehvahdjukaar.moonlight.api.integration.configured.CustomConfigSelectScreen;
+import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
@@ -27,7 +28,7 @@ public class ModConfigScreen extends CustomConfigScreen {
     private static final Map<String, ItemStack> CUSTOM_ICONS = new HashMap<>();
 
     static {
-        addIcon("sleds", ModRegistry.SLED_ITEMS.get(WoodTypeRegistry.OAK_TYPE));
+        addIcon("sleds", ModRegistry.SLED_ITEMS.get(VanillaWoodTypes.OAK));
         addIcon("gumdrops", ModRegistry.GUMDROPS_BUTTONS.get(DyeColor.GREEN).get().asItem());
         addIcon("glow lights", ModRegistry.GLOW_LIGHTS_ITEMS.get(null).get().asItem());
         addIcon("blocks and items", ModRegistry.CANDY_CANE_BLOCK.get());
