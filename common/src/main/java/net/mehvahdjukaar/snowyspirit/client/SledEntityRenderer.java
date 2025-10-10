@@ -47,7 +47,7 @@ public class SledEntityRenderer extends EntityRenderer<SledEntity> {
         this.model = new SledModel<>(context.bakeLayer(ClientRegistry.SLED_MODEL));
         this.modelBamboo = new SledModel<>(context.bakeLayer(ClientRegistry.SLED_MODEL_BAMBOO));
         this.quiltModel = new QuiltModel<>(context.bakeLayer(ClientRegistry.QUILT_MODEL));
-        this.textures = WoodTypeRegistry.getTypes().stream().collect(ImmutableMap.toImmutableMap((e) -> e,
+        this.textures = WoodTypeRegistry.INSTANCE.getValues().stream().collect(ImmutableMap.toImmutableMap((e) -> e,
                 (t) -> SnowySpirit.res("textures/entity/sled/" + t.getTexturePath() + ".png")));
         this.quiltTextures = Stream.of(DyeColor.values()).collect(ImmutableMap.toImmutableMap((e) -> e,
                 (t) -> SnowySpirit.res("textures/entity/sled/quilt/" + t.getName() + ".png")));
@@ -122,7 +122,7 @@ public class SledEntityRenderer extends EntityRenderer<SledEntity> {
         return this.textures.get(sled.getWoodType());
     }
 
-    public static final WoodType BAMBOO = WoodTypeRegistry.getValue(ResourceLocation.tryParse("bamboo"));
+    public static final WoodType BAMBOO = WoodTypeRegistry.INSTANCE.get(ResourceLocation.tryParse("bamboo"));
 
     public SledModel<SledEntity> getModel(SledEntity sled){
         return sled.getWoodType() == BAMBOO ? modelBamboo : model;

@@ -2,6 +2,7 @@ package net.mehvahdjukaar.snowyspirit.reg;
 
 import net.mehvahdjukaar.moonlight.api.misc.RegSupplier;
 import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
+import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.configs.CommonConfigs;
@@ -24,7 +25,7 @@ public class ModCreativeTabs {
     public static final RegSupplier<CreativeModeTab> MOD_TAB = !CommonConfigs.MOD_TAB.get() ? null :
             RegHelper.registerCreativeModeTab(SnowySpirit.res(SnowySpirit.MOD_ID), builder ->
                     builder.title(Component.translatable("tab.snowyspirit")).icon(
-                            () -> ModRegistry.SLED_ITEMS.get(WoodTypeRegistry.OAK_TYPE).getDefaultInstance()));
+                            () -> ModRegistry.SLED_ITEMS.get(VanillaWoodTypes.OAK).getDefaultInstance()));
 
 
     public static void init() {
