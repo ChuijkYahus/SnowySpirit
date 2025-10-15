@@ -1,7 +1,7 @@
 package net.mehvahdjukaar.snowyspirit.integration.supp;
 
 import net.mehvahdjukaar.snowyspirit.common.entity.ContainerHolderEntity;
-import net.mehvahdjukaar.supplementaries.common.inventories.SackContainerMenu;
+import net.mehvahdjukaar.supplementaries.common.inventories.VariableSizeContainerMenu;
 import net.mehvahdjukaar.supplementaries.common.items.CandyItem;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.configs.CommonConfigs;
@@ -22,7 +22,7 @@ public class SuppCompat {
     }
 
     public static AbstractContainerMenu createSackMenu(int id, Inventory inventory, Container container) {
-        return new SackContainerMenu(id, inventory, container);
+        return new VariableSizeContainerMenu(id, inventory, container, container.getContainerSize());
     }
 
     public static void triggerSweetTooth(Level level, LivingEntity entity) {

@@ -3,9 +3,11 @@ package net.mehvahdjukaar.snowyspirit.dynamicpack;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynServerResourcesGenerator;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicDataPack;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
+import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicServerResourceProvider;
+import net.mehvahdjukaar.moonlight.api.resources.pack.PackGenerationStrategy;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
+import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.configs.CommonConfigs;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
@@ -13,52 +15,49 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.crafting.Recipe;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class ServerDynamicResourcesHandler extends DynServerResourcesGenerator {
+public class ServerDynamicResourcesHandler extends DynamicServerResourceProvider {
 
     public static final ServerDynamicResourcesHandler INSTANCE = new ServerDynamicResourcesHandler();
 
     public ServerDynamicResourcesHandler() {
-        super(new DynamicDataPack(SnowySpirit.res("generated_pack")));
-        this.dynamicPack.setGenerateDebugResources(PlatHelper.isDev() || CommonConfigs.DEBUG_RESOURCES.get());
+        super(SnowySpirit.res("generated_pack"), PackGenerationStrategy.CACHED);
     }
 
     @Override
-    public Collection<String> additionalNamespaces() {
-        return List.of("snowyspirit");
+    protected Collection<String> gatherSupportedNamespaces() {
+        return List.of(SnowySpirit.MOD_ID);
     }
 
     @Override
-    public Logger getLogger() {
-        return SnowySpirit.LOGGER;
+    protected void regenerateDynamicAssets(Consumer<ResourceGenTask> consumer) {
+        consumer.accept(this::regenerateDynamicAssets);
     }
 
-    @Override
-    public boolean dependsOnLoadedPacks() {
-        return true;
-    }
-
-    @Override
-    public void regenerateDynamicAssets(ResourceManager resourceManager) {
+    private void regenerateDynamicAssets(ResourceManager resourceManager, ResourceSink sink) {
 
         SimpleTagBuilder builder = SimpleTagBuilder.of(SnowySpirit.res("sleds"));
         builder.addEntries(ModRegistry.SLED_ITEMS.values());
-        dynamicPack.addTag(builder, Registries.ITEM);
+        sink.addTag(builder, Registries.ITEM);
 
         ResourceLocation id = SnowySpirit.res("sled_oak");
         Recipe<?> recipeTemplate = RPUtils.readRecipe(resourceManager, id);
 
         ModRegistry.SLED_ITEMS.forEach((w, b) -> {
-            if (w != WoodTypeRegistry.OAK_TYPE) {
-                var newR = RPUtils.makeSimilarRecipe(recipeTemplate, WoodTypeRegistry.OAK_TYPE, w, id);
-                this.dynamicPack.addRecipe(newR);
+            if (w != VanillaWoodTypes.OAK) {
+                var newR = RPUtils.makeSimilarRecipe(recipeTemplate, VanillaWoodTypes.OAK, w, id);
+                sink.addRecipe(newR);
             }
         });
     }
 
+    @Override
+    protected boolean generateDebugResources() {
+        return PlatHelper.isDev() || CommonConfigs.DEBUG_RESOURCES.get();
+    }
 
 }
