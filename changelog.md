@@ -1,1 +1,1 @@
-added missing tags
+updated resource gen code

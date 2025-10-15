@@ -1,6 +1,5 @@
 package net.mehvahdjukaar.snowyspirit.dynamicpack;
 
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicServerResourceProvider;
@@ -9,7 +8,6 @@ import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
-import net.mehvahdjukaar.snowyspirit.configs.CommonConfigs;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -53,11 +51,6 @@ public class ServerDynamicResourcesHandler extends DynamicServerResourceProvider
                 sink.addRecipe(newR);
             }
         });
-    }
-
-    @Override
-    protected boolean generateDebugResources() {
-        return PlatHelper.isDev() || CommonConfigs.DEBUG_RESOURCES.get();
     }
 
 }
