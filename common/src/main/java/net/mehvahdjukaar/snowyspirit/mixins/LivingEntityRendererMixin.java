@@ -25,7 +25,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 
 
     //animations for sled pullers
-    //injects in all calls, so it works with optishit code. needs redirect
+    //injects in all calls, so it works with optishit code.
     @WrapOperation(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At(value = "INVOKE",
                     target = "net/minecraft/world/entity/LivingEntity.isPassenger ()Z"))

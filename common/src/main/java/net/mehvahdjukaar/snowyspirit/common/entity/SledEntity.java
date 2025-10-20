@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.mehvahdjukaar.moonlight.api.entity.IControllableVehicle;
 import net.mehvahdjukaar.moonlight.api.platform.network.NetworkHelper;
 import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
+import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
@@ -151,7 +152,7 @@ public class SledEntity extends Entity implements IControllableVehicle {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(DATA_WOOD_TYPE, WoodTypeRegistry.OAK_TYPE);
+        builder.define(DATA_WOOD_TYPE, VanillaWoodTypes.OAK);
         builder.define(DATA_SEAT_TYPE, 0);
         builder.define(DATA_ID_HURT, 0);
         builder.define(DATA_ID_HURT_DIR, 1);

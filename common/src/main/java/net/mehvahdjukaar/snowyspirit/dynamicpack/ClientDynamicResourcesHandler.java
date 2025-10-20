@@ -1,13 +1,15 @@
 package net.mehvahdjukaar.snowyspirit.dynamicpack;
 
 import net.mehvahdjukaar.moonlight.api.events.AfterLanguageLoadEvent;
-import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
+import net.mehvahdjukaar.moonlight.api.misc.IProgressTracker;
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.ResType;
 import net.mehvahdjukaar.moonlight.api.resources.StaticResource;
 import net.mehvahdjukaar.moonlight.api.resources.assets.LangBuilder;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynClientResourcesGenerator;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicTexturePack;
+import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicClientResourceProvider;
+import net.mehvahdjukaar.moonlight.api.resources.pack.PackGenerationStrategy;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Respriter;
 import net.mehvahdjukaar.moonlight.api.resources.textures.SpriteUtils;
@@ -15,28 +17,22 @@ import net.mehvahdjukaar.moonlight.api.resources.textures.TextureImage;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.moonlight.api.util.math.colors.HSVColor;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
-import net.mehvahdjukaar.snowyspirit.configs.CommonConfigs;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
-import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
+public class ClientDynamicResourcesHandler extends DynamicClientResourceProvider {
 
     public static final ClientDynamicResourcesHandler INSTANCE = new ClientDynamicResourcesHandler();
 
     public ClientDynamicResourcesHandler() {
-        super(new DynamicTexturePack(SnowySpirit.res("generated_pack")));
-        this.dynamicPack.setGenerateDebugResources(PlatHelper.isDev() || CommonConfigs.DEBUG_RESOURCES.get());
+        super(SnowySpirit.res("generated_pack"), PackGenerationStrategy.CACHED);
     }
 
     private static final Map<DyeColor, float[]> COLORS = new EnumMap<>(DyeColor.class);
@@ -59,8 +55,8 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
     }
 
     @Override
-    protected void onNormalReload(ResourceManager manager) {
-        super.onNormalReload(manager);
+    public void reload(ResourceManager manager, IProgressTracker reporter) {
+        super.reload(manager, reporter);
 
         try {
             var l = SpriteUtils.parsePaletteStrip(manager,
@@ -88,26 +84,25 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
     }
 
     @Override
-    public Logger getLogger() {
-        return SnowySpirit.LOGGER;
+    protected Collection<String> gatherSupportedNamespaces() {
+        return List.of(SnowySpirit.MOD_ID);
     }
 
     @Override
-    public boolean dependsOnLoadedPacks() {
-        return true;
+    protected void regenerateDynamicAssets(Consumer<ResourceGenTask> consumer) {
+        consumer.accept(this::regenerateDynamicAssets);
     }
 
-    @Override
-    public void regenerateDynamicAssets(ResourceManager manager) {
+    private void regenerateDynamicAssets(ResourceManager manager, ResourceSink sink) {
         StaticResource itemModel = StaticResource.getOrLog(manager,
                 ResType.ITEM_MODELS.getPath(SnowySpirit.res("sled_oak")));
 
         ModRegistry.SLED_ITEMS.forEach((wood, sled) -> {
 
             try {
-                this.addSimilarJsonResource(manager, itemModel, "sled_oak", wood.getVariantId("sled"));
+                sink.addSimilarJsonResource(manager, itemModel, "sled_oak", wood.getVariantId("sled"));
             } catch (Exception ex) {
-                getLogger().error("Failed to generate Sled item model for {} : {}", sled, ex);
+                SnowySpirit.LOGGER.error("Failed to generate Sled item model for {} : {}", sled, ex);
             }
         });
 
@@ -119,7 +114,7 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
             ModRegistry.SLED_ITEMS.forEach((wood, sled) -> {
 
                 ResourceLocation textureRes = SnowySpirit.res("entity/sled/" + wood.getTexturePath());
-                if (this.alreadyHasTextureAtLocation(manager, textureRes)) return;
+                if (sink.alreadyHasTextureAtLocation(manager, textureRes)) return;
 
 
                 try (TextureImage plankTexture = TextureImage.open(manager,
@@ -128,14 +123,14 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
                     var targetPalette = Palette.fromImage(plankTexture);
                     TextureImage newImage = respriter.recolor(targetPalette);
                     //TextureImage newImage = respriter.recolorWithAnimationOf(plankTexture);
-                    dynamicPack.addAndCloseTexture(textureRes, newImage, false);
+                    sink.addTexture(textureRes, newImage);
 
                 } catch (Exception ex) {
-                    getLogger().error("Failed to generate sled entity texture for for {} : {}", sled, ex);
+                    SnowySpirit.LOGGER.error("Failed to generate sled entity texture for for {} : {}", sled, ex);
                 }
             });
         } catch (Exception ex) {
-            getLogger().error("Could not generate any sled entity texture : ", ex);
+            SnowySpirit.LOGGER.error("Could not generate any sled entity texture : ", ex);
         }
 
         //item textures
@@ -149,7 +144,7 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
             ModRegistry.SLED_ITEMS.forEach((wood, sled) -> {
                 //if (wood.isVanilla()) continue;
                 ResourceLocation textureRes = SnowySpirit.res("item/sleds/" + Utils.getID(sled).getPath());
-                if (this.alreadyHasTextureAtLocation(manager, textureRes)) return;
+                if (sink.alreadyHasTextureAtLocation(manager, textureRes)) return;
 
                 TextureImage newImage = null;
                 Item boat = wood.getItemOfThis("boat");
@@ -161,7 +156,7 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
                         newImage = respriter.recolor(targetPalette);
 
                     } catch (Exception ex) {
-                        getLogger().warn("Could not find boat texture for wood type {}. Using plank texture : {}", wood, ex);
+                        SnowySpirit.LOGGER.warn("Could not find boat texture for wood type {}. Using plank texture : {}", wood, ex);
                     }
                 }
                 //if it failed use plank one
@@ -172,15 +167,15 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
                         newImage = respriter.recolor(targetPalette);
 
                     } catch (Exception ex) {
-                        getLogger().error("Failed to generate sled item texture for for {} : {}", sled, ex);
+                        SnowySpirit.LOGGER.error("Failed to generate sled item texture for for {} : {}", sled, ex);
                     }
                 }
                 if (newImage != null) {
-                    dynamicPack.addAndCloseTexture(textureRes, newImage);
+                    sink.addTexture(textureRes, newImage);
                 }
             });
         } catch (Exception ex) {
-            getLogger().error("Could not generate any Sleds item texture : ", ex);
+            SnowySpirit.LOGGER.error("Could not generate any Sleds item texture : ", ex);
         }
     }
 

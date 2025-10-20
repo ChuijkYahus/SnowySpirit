@@ -13,7 +13,8 @@
     "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "snowyspirit:sled_spruce"
+      "count": 1,
+      "id": "snowyspirit:sled_spruce"
     },
     "show_toast": true,
     "title": {
