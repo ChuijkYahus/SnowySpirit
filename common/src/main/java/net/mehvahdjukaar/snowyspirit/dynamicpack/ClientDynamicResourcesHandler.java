@@ -32,7 +32,7 @@ public class ClientDynamicResourcesHandler extends DynamicClientResourceProvider
     public static final ClientDynamicResourcesHandler INSTANCE = new ClientDynamicResourcesHandler();
 
     public ClientDynamicResourcesHandler() {
-        super(SnowySpirit.res("generated_pack"), PackGenerationStrategy.CACHED);
+        super(SnowySpirit.res("generated_pack"), PackGenerationStrategy.CACHED_ZIPPED);
     }
 
     private static final Map<DyeColor, float[]> COLORS = new EnumMap<>(DyeColor.class);
