@@ -5,7 +5,7 @@ import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.common.entity.GolemHelper;
-import net.mehvahdjukaar.snowyspirit.common.wreath.ServerEvents;
+import net.mehvahdjukaar.snowyspirit.common.wreath.WreathHandler;
 import net.mehvahdjukaar.snowyspirit.integration.configured.ModConfigSelectScreen;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
 import net.minecraft.server.level.ServerLevel;
@@ -21,7 +21,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
@@ -40,7 +39,6 @@ public class SnowySpiritForge {
         if (PlatHelper.getPhysicalSide().isClient()) {
             ClientHelper.addClientSetup(() -> {
                 if (ModList.get().isLoaded("configured")) {
-                    //TODO: add back
                     ModConfigSelectScreen.registerConfigScreen(SnowySpirit.MOD_ID, ModConfigSelectScreen::new);
                 }
             });
@@ -63,7 +61,7 @@ public class SnowySpiritForge {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        InteractionResult res = ServerEvents.onRightClickBlock(event.getEntity(), event.getLevel(), event.getItemStack(), event.getPos());
+        InteractionResult res = WreathHandler.onRightClickBlock(event.getEntity(), event.getLevel(), event.getItemStack(), event.getPos());
         if (res != InteractionResult.PASS) {
             event.setCanceled(true);
             event.setCancellationResult(res);
@@ -73,18 +71,8 @@ public class SnowySpiritForge {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void tickEvent(LevelTickEvent.Post event) {
         if (event.getLevel() instanceof ServerLevel level) {
-            ServerEvents.tickEvent(level);
+            WreathHandler.tickEvent(level);
         }
-    }
-
-    @SubscribeEvent
-    public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        ServerEvents.onPlayerLogin(event.getEntity());
-    }
-
-    @SubscribeEvent
-    public void onDimensionChanged(PlayerEvent.PlayerChangedDimensionEvent event) {
-        ServerEvents.onDimensionChanged(event.getEntity());
     }
 
     @SubscribeEvent

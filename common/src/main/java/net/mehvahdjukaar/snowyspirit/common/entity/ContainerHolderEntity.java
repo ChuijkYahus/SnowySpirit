@@ -249,7 +249,7 @@ public class ContainerHolderEntity extends Entity implements Container, MenuProv
             // this.xRotO = this.getXRot();
             //this.yRotO = this.getYRot();
         } else {
-             if(!level().isClientSide)  this.destroy(this.damageSources().generic());
+            if (!level().isClientSide) this.destroy(this.damageSources().generic());
         }
     }
 
@@ -310,12 +310,12 @@ public class ContainerHolderEntity extends Entity implements Container, MenuProv
         InteractionResult ret = super.interact(pPlayer, pHand);
         if (ret.consumesAction()) return ret;
         if (!pPlayer.level().isClientSide) {
-            PlatHelper.openCustomMenu((ServerPlayer) pPlayer, this, b -> {
-                //just for sack
-                b.writeBoolean(false);
-                b.writeVarInt(this.getId());
-                b.writeInt(this.getContainerSize());
-            });
+            boolean isSack = isSack(this.getContainerItem().getItem());
+            if (isSack) {
+                SuppCompat.openSackMenu((ServerPlayer) pPlayer, this);
+            } else {
+                PlatHelper.openCustomMenu((ServerPlayer) pPlayer, this);
+            }
             this.gameEvent(GameEvent.CONTAINER_OPEN, pPlayer);
             PiglinAi.angerNearbyPiglins(pPlayer, true);
             return InteractionResult.CONSUME;

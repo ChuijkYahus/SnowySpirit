@@ -4,8 +4,8 @@ package net.mehvahdjukaar.snowyspirit.common.ai;
 import com.google.common.collect.ImmutableMap;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
-import net.mehvahdjukaar.snowyspirit.common.wreath.WreathHelper;
-import net.mehvahdjukaar.snowyspirit.common.wreath.WreathSavedData;
+import net.mehvahdjukaar.snowyspirit.common.wreath.WreathData;
+import net.mehvahdjukaar.snowyspirit.common.wreath.WreathHandler;
 import net.mehvahdjukaar.snowyspirit.reg.ModMemoryModules;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
 import net.minecraft.core.BlockPos;
@@ -94,7 +94,7 @@ public class PlaceWreathTask extends Behavior<Villager> {
                 if (ticksSinceReached > 20) {
 
 
-                    if (WreathHelper.placeWreathOnDoor(targetPos, pLevel)) {
+                    if (WreathHandler.placeWreathOnDoor(targetPos, pLevel)) {
                         pOwner.getBrain().setMemory(ModMemoryModules.WREATH_POS.get(), GlobalPos.of(pLevel.dimension(), targetPos));
                     }
                     //so task ends
@@ -129,8 +129,8 @@ public class PlaceWreathTask extends Behavior<Villager> {
         if (state.getBlock() instanceof DoorBlock) {
             boolean lower = state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
 
-            var c = WreathSavedData.get(serverLevel);
-            return c != null && (lower ? !c.hasWreath(pos.above()) : !c.hasWreath(pos));
+            WreathData c = WreathData.getAt(serverLevel, pos);
+            return c != null && (lower ? !c.hasWreathAt(pos.above()) : !c.hasWreathAt(pos));
         }
 
         return false;

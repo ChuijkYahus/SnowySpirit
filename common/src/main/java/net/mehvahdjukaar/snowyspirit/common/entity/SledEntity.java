@@ -10,7 +10,7 @@ import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.client.SledSoundInstance;
-import net.mehvahdjukaar.snowyspirit.common.network.ServerBoundUpdateSledState;
+import net.mehvahdjukaar.snowyspirit.common.network.ServerBoundUpdateSledStateMessage;
 import net.mehvahdjukaar.snowyspirit.configs.CommonConfigs;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
 import net.mehvahdjukaar.snowyspirit.reg.ModTags;
@@ -558,7 +558,7 @@ public class SledEntity extends Entity implements IControllableVehicle {
                     // updates same synced data also on client cause u never know
                     this.setSyncedMovement(movement);
                     // send client movement to other clients
-                    NetworkHelper.sendToServer(new ServerBoundUpdateSledState(movement));
+                    NetworkHelper.sendToServer(new ServerBoundUpdateSledStateMessage(movement));
                     this.spawnTrailParticles(movement, horizontalSpeed);
                 }
             } else {

@@ -1,35 +1,18 @@
 architectury {
-    common(enabled_platforms.split(","))
+    common(enabled_platforms.split(",")) {
+        // This means map neoforge to forge
+        //it.platformPackage "neoforge", "forge"
+    }
 }
 
 loom {
     accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
 }
 
-dependencies {
-
-    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
-    // Do NOT use other classes from fabric loader
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-
-    if (isMyPc) {
-        modImplementation("net.mehvahdjukaar:moonlight:${moonlight_version}")
-    } else {
-        modImplementation("curse.maven:selene-499980:7068423")
-    }
-
-    modCompileOnly("curse.maven:farmers-delight-398521:5772720")
-    modImplementation("curse.maven:entity-model-features-844662:5722728")
-    modImplementation("curse.maven:entity-texture-features-fabric-568563:5000985")
-
-    if(isMyPc) {
-        //modImplementation("net.mehvahdjukaar:supplementaries:${project.supplementaries_version}")
-        modImplementation("curse.maven:supplementaries-412082:5923344")
-    } else {
-        modImplementation("curse.maven:supplementaries-412082:5923344")
-    }
-
-
+sourceSets.create("example") {
+    var main = sourceSets.main
+    compileClasspath += main.compileClasspath + main.output
+    runtimeClasspath += main.runtimeClasspath + main.output
 }
 
 publishing {
@@ -45,10 +28,24 @@ publishing {
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    it.options.compilerArgs.add("-Acrafttweaker.processor.document.output_directory=${new File(rootProject.buildDir, "docsOut")}")
-    it.options.compilerArgs.add("-Acrafttweaker.processor.document.multi_source=true")
 
-    it.options.compilerArgs << "-Xmaxerrs" << "4000"
+dependencies {
+
+    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
+    // Do NOT use other classes from fabric loader
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+
+    modApi("net.mehvahdjukaar:moonlight:${moonlight_version}") {
+        transitive = true
+    }
+
+
+    modCompileOnly("curse.maven:farmers-delight-398521:5772720")
+    modImplementation("curse.maven:entity-model-features-844662:5722728")
+    modImplementation("curse.maven:entity-texture-features-fabric-568563:5000985")
+
+    modImplementation("net.mehvahdjukaar:supplementaries:${supplementaries_version}")
+
 
 }
+

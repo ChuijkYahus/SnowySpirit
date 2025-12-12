@@ -2,13 +2,19 @@ package net.mehvahdjukaar.snowyspirit.reg;
 
 import com.google.common.collect.ImmutableMap;
 import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
+import net.mehvahdjukaar.moonlight.api.misc.IAttachmentType;
 import net.mehvahdjukaar.moonlight.api.misc.Registrator;
+import net.mehvahdjukaar.moonlight.api.misc.WorldSavedData;
+import net.mehvahdjukaar.moonlight.api.misc.WorldSavedDataType;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
+import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
+import net.mehvahdjukaar.snowyspirit.common.wreath.ChunksWithWreaths;
+import net.mehvahdjukaar.snowyspirit.common.wreath.WreathData;
 import net.mehvahdjukaar.snowyspirit.common.block.*;
 import net.mehvahdjukaar.snowyspirit.common.entity.ContainerHolderEntity;
 import net.mehvahdjukaar.snowyspirit.common.entity.GingyEntity;
@@ -21,9 +27,9 @@ import net.mehvahdjukaar.snowyspirit.common.items.SledItem;
 import net.minecraft.Util;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataSerializer;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -34,9 +40,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.material.MapColor;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,7 +54,7 @@ import java.util.function.UnaryOperator;
 public class ModRegistry {
 
     public static void init() {
-        BlockSetAPI.addDynamicItemRegistration(ModRegistry::registerSledItems, WoodType.class);
+        BlockSetAPI.addDynamicRegistration(SnowySpirit.MOD_ID, ModRegistry::registerSledItems, BuiltInRegistries.ITEM);
         RegHelper.addAttributeRegistration(ModRegistry::registerAttributes);
     }
 
@@ -57,8 +63,8 @@ public class ModRegistry {
         event.register(GINGERBREAD_GIANT.get(), MongoEntity.createGiantAttributes());
     }
 
-    private static void registerSledItems(Registrator<Item> event, Collection<WoodType> woodTypes) {
-        for (WoodType wood : woodTypes) {
+    private static void registerSledItems(Registrator<Item> event) {
+        for (WoodType wood : WoodTypeRegistry.INSTANCE) {
             if (wood.canBurn() || SnowySpirit.BOATLOAD_INSTALLED) {
                 String name = wood.getVariantId(SLED_NAME);
                 SledItem item = new SledItem(wood);
@@ -73,6 +79,19 @@ public class ModRegistry {
     public static final Supplier<EntityDataSerializer<WoodType>> WOOD_TYPE_SERIALIZER =
             RegHelper.registerEntityDataSerializer(SnowySpirit.res("wood_type"),
                     () -> EntityDataSerializer.forValueType(WoodType.STREAM_CODEC));
+
+
+    public static final IAttachmentType<WreathData, ChunkAccess> WREATH_CHUNK_DATA = RegHelper.registerDataAttachment(
+            SnowySpirit.res("wreath_data"),
+            () -> RegHelper.AttachmentBuilder.create(WreathData::new)
+                    .syncWith(WreathData.STREAM_CODEC)
+                    .persistent(WreathData.CODEC)
+                    .copyOnDeath(), ChunkAccess.class);
+
+    public static final WorldSavedDataType<ChunksWithWreaths> WREATH_WORLD_DATA = RegHelper.registerWorldSavedData(
+            SnowySpirit.res("wreath_chunks"),
+            (s) -> new ChunksWithWreaths(), ChunksWithWreaths.CODEC,
+            PlatHelper.getPlatform().isFabric() ? ChunksWithWreaths.STREAM_CODEC : null, true);
 
 
     public static final BlockSetType GINGER_TYPE = BlockSetType.register(new BlockSetType(SnowySpirit.res("ginger").toString()));

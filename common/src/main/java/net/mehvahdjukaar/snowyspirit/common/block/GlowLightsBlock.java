@@ -115,7 +115,8 @@ public class GlowLightsBlock extends WaterBlock implements EntityBlock, IColored
         for (var e : DIR_MAP.entrySet()) {
             Direction d = e.getKey();
             BlockPos p = pos.relative(d);
-            state = state.setValue(e.getValue(), !Block.isFaceFull(level.getBlockState(p).getCollisionShape(level, p), d.getOpposite()));
+            state = state.setValue(e.getValue(), !Block.isFaceFull(level.getBlockState(p)
+                    .getCollisionShape(level, p), d.getOpposite()));
         }
         return state;
     }

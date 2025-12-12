@@ -1,11 +1,14 @@
 package net.mehvahdjukaar.snowyspirit.integration.supp;
 
 import net.mehvahdjukaar.snowyspirit.common.entity.ContainerHolderEntity;
+import net.mehvahdjukaar.supplementaries.common.block.tiles.SackBlockTile;
 import net.mehvahdjukaar.supplementaries.common.inventories.VariableSizeContainerMenu;
 import net.mehvahdjukaar.supplementaries.common.items.CandyItem;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.configs.CommonConfigs;
+import net.mehvahdjukaar.supplementaries.reg.ModMenuTypes;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,7 +25,8 @@ public class SuppCompat {
     }
 
     public static AbstractContainerMenu createSackMenu(int id, Inventory inventory, Container container) {
-        return new VariableSizeContainerMenu(id, inventory, container, container.getContainerSize());
+        return new VariableSizeContainerMenu(ModMenuTypes.SACK.get(),
+                id, inventory, container, SackBlockTile. getUnlockedSlots());
     }
 
     public static void triggerSweetTooth(Level level, LivingEntity entity) {
@@ -30,12 +34,16 @@ public class SuppCompat {
     }
 
     public static boolean isCandy(ItemStack stack) {
-       return CommonConfigs.Tools.CANDY_ENABLED.get() ? stack.is(ModRegistry.CANDY_ITEM.get()) : stack.is(Items.PUMPKIN_PIE);
+        return CommonConfigs.Tools.CANDY_ENABLED.get() ? stack.is(ModRegistry.CANDY_ITEM.get()) : stack.is(Items.PUMPKIN_PIE);
     }
 
     public static boolean isGlobe(ItemStack stack) {
         return CommonConfigs.Building.GLOBE_SEPIA.get() ? stack.is(ModRegistry.GLOBE_SEPIA.get().asItem()) :
                 CommonConfigs.Building.GLOBE_ENABLED.get() ? stack.is(ModRegistry.GLOBE.get().asItem()) : stack.is(Items.BELL);
 
+    }
+
+    public static void openSackMenu(ServerPlayer pPlayer, ContainerHolderEntity containerHolderEntity) {
+        VariableSizeContainerMenu.openEntityMenu(pPlayer, containerHolderEntity);
     }
 }

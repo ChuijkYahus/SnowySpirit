@@ -1,6 +1,7 @@
 package net.mehvahdjukaar.snowyspirit.dynamicpack;
 
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
+import net.mehvahdjukaar.moonlight.api.resources.RecipeTemplate;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicServerResourceProvider;
 import net.mehvahdjukaar.moonlight.api.resources.pack.PackGenerationStrategy;
@@ -47,7 +48,7 @@ public class ServerDynamicResourcesHandler extends DynamicServerResourceProvider
 
         ModRegistry.SLED_ITEMS.forEach((w, b) -> {
             if (w != VanillaWoodTypes.OAK) {
-                var newR = RPUtils.makeSimilarRecipe(recipeTemplate, VanillaWoodTypes.OAK, w, id);
+                var newR = RecipeTemplate.makeSimilarRecipe(recipeTemplate, VanillaWoodTypes.OAK, w, id);
                 sink.addRecipe(newR);
             }
         });

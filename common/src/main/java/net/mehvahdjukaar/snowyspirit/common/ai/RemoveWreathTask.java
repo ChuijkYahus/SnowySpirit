@@ -2,10 +2,8 @@ package net.mehvahdjukaar.snowyspirit.common.ai;
 
 import com.google.common.collect.ImmutableMap;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
-import net.mehvahdjukaar.moonlight.api.platform.network.NetworkHelper;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
-import net.mehvahdjukaar.snowyspirit.common.network.ClientBoundSyncWreathMessage;
-import net.mehvahdjukaar.snowyspirit.common.wreath.WreathSavedData;
+import net.mehvahdjukaar.snowyspirit.common.wreath.WreathData;
 import net.mehvahdjukaar.snowyspirit.reg.ModMemoryModules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -88,10 +86,10 @@ public class RemoveWreathTask extends Behavior<Villager> {
             BlockState state = level.getBlockState(pos);
             if (state.getBlock() instanceof DoorBlock) {
                 boolean lower = state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
-                var c = WreathSavedData.get(level);
+                var c = WreathData.getAt(level, pos);
 
                 pos = lower ? pos.above() : pos;
-                if (c != null && c.hasWreath(pos)) {
+                if (c != null && c.hasWreathAt(pos)) {
                     //breaking animation. same as fodder lol. might have the same issues
                     int k = (int) ((float) this.ticksSinceReached / (float) 10 * 10.0F);
                     if (k != this.lastBreakProgress) {
@@ -103,7 +101,7 @@ public class RemoveWreathTask extends Behavior<Villager> {
 
                         pOwner.getBrain().eraseMemory(ModMemoryModules.WREATH_POS.get());
                         c.removeWreath(pos, level, true);
-                        NetworkHelper.sendToAllClientPlayers(new ClientBoundSyncWreathMessage(pos, false));
+                        c.markDirty(pos, level);
                     }
                     return;
                 }

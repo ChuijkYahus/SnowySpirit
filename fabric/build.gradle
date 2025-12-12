@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
 architectury {
@@ -19,63 +19,27 @@ configurations {
     developmentFabric.extendsFrom common
 }
 
-dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-
-
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
-
-    if (isMyPc) {
-        modImplementation("net.mehvahdjukaar:moonlight-fabric:${moonlight_version}")
-        //modImplementation("curse.maven:selene-499980:5913547")
-    } else {
-        modImplementation("curse.maven:selene-499980:7068423")
-    }
-
-    modImplementation("curse.maven:yacl-667299:4574163")
-
-    modCompileOnly("curse.maven:modmenu-308702:3920481") {
-        exclude module: "fabric-api"
-    }
-
-
-    modCompileOnly ("curse.maven:fabric-seasons-413523:4576886")
-    if(isMyPc) {
-        //modImplementation("net.mehvahdjukaar:supplementaries:${project.supplementaries_version}")
-       /// modImplementation("curse.maven:supplementaries-412082:5981094")
-    } else {
-       // modImplementation("curse.maven:supplementaries-412082:5923344")
-    }
-    modCompileOnly("curse.maven:farmers-delight-fabric-482834:4061213")
-    modCompileOnly "com.terraformersmc:modmenu:4.0.6", {
-        exclude module: "fabric-api"
-    }
-}
-
-
 processResources {
     filesMatching("fabric.mod.json") {
         expand rootProject.ext.replaceProperties + [project: project]
     }
 }
 
-
 shadowJar {
     exclude "architectury.common.json"
 
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
-
-    zip64 true
 }
 
 remapJar {
+    exclude '**/example/**'
+
     injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveClassifier = "fabric"
+    archiveClassifier = null
+    archiveClassifier = 'fabric'
 }
 
 jar {
@@ -86,6 +50,12 @@ sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
+
+    archiveClassifier = "fabric-sources"
+}
+
+remapSourcesJar {
+    archiveClassifier = "fabric-sources"
 }
 
 components.java {
@@ -101,13 +71,36 @@ publishing {
             from components.java
         }
     }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        maven {
-            url = "https://www.cursemaven.com"
-            allowInsecureProtocol = true
-        }
-    }
 }
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+
+    modApi("net.mehvahdjukaar:moonlight-fabric:${moonlight_version}"){
+        transitive = false
+    }
+
+    modImplementation("curse.maven:yacl-667299:4574163")
+
+    modCompileOnly("curse.maven:modmenu-308702:3920481") {
+        exclude module: "fabric-api"
+    }
+
+    modCompileOnly("curse.maven:fabric-seasons-413523:4576886")
+
+    modCompileOnly("curse.maven:farmers-delight-fabric-482834:4061213")
+    modCompileOnly "com.terraformersmc:modmenu:4.0.6", {
+        exclude module: "fabric-api"
+    }
+
+    modImplementation("net.mehvahdjukaar:supplementaries-fabric:${supplementaries_version}"){
+        transitive = false
+    }
+
+}
+

@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +25,8 @@ public abstract class SelfGlowLightsBlockMixin extends Block implements IShearab
     }
 
     @Shadow
-    public abstract List<ItemStack> shearAction(@Nullable Player player, @Nonnull ItemStack item,
-                                                Level world, BlockPos pos);
+    protected abstract List<ItemStack> shearAction(@Nullable Player player, @Nonnull ItemStack item,
+                                                   Level world, BlockPos pos);
 
     @Override
     public boolean isShearable(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {

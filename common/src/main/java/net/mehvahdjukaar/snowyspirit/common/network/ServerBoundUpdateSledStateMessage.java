@@ -1,30 +1,28 @@
 package net.mehvahdjukaar.snowyspirit.common.network;
 
 import net.mehvahdjukaar.moonlight.api.platform.network.Message;
-import net.mehvahdjukaar.moonlight.api.platform.network.NetworkHelper;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.common.entity.SledEntity;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.phys.Vec3;
 
-public class ServerBoundUpdateSledState implements Message {
+public class ServerBoundUpdateSledStateMessage implements Message {
 
-    public static final TypeAndCodec<RegistryFriendlyByteBuf,ServerBoundUpdateSledState> CODEC =
-            Message.makeType(SnowySpirit.res("s2c_update_sled_movement"), ServerBoundUpdateSledState::new);
+    public static final TypeAndCodec<RegistryFriendlyByteBuf, ServerBoundUpdateSledStateMessage> CODEC =
+            Message.makeType(SnowySpirit.res("s2c_update_sled_movement"), ServerBoundUpdateSledStateMessage::new);
 
     public final float clientDx;
     public final float clientDy;
     public final float clientDz;
 
-    public ServerBoundUpdateSledState(RegistryFriendlyByteBuf buffer) {
+    public ServerBoundUpdateSledStateMessage(RegistryFriendlyByteBuf buffer) {
         this.clientDx = buffer.readFloat();
         this.clientDy = buffer.readFloat();
         this.clientDz = buffer.readFloat();
     }
 
-    public ServerBoundUpdateSledState(Vec3 movement) {
+    public ServerBoundUpdateSledStateMessage(Vec3 movement) {
         this.clientDx = (float) movement.x;
         this.clientDy = (float) movement.y;
         this.clientDz = (float) movement.z;
