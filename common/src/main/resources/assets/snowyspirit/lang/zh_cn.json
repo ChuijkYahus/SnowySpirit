@@ -90,5 +90,75 @@
   "message.snowyspirit.container_entity_name": "雪橇%s",
   "subtitle.snowyspirit.music_disc.a_carol": "A Carol",
   "subtitle.snowyspirit.sled": "雪橇：滑行",
-  "tab.snowyspirit": "Snowy Spirit"
+  "tab.snowyspirit": "Snowy Spirit",
+
+
+
+
+
+  "snowyspirit.configuration.enabled": "启用",
+
+
+
+  "snowyspirit.configuration.snowy_season": "落雪季节",
+
+  "snowyspirit.configuration.snow_season_start": "落雪季节起始日期",
+  "snowyspirit.configuration.month": "月",
+  "snowyspirit.configuration.day": "日",
+
+  "snowyspirit.configuration.snow_season_end": "落雪季节结束日期",
+
+  "snowyspirit.configuration.season_mod_compat": "季节模组兼容",
+
+
+
+  "snowyspirit.configuration.misc": "杂项",
+
+  "snowyspirit.configuration.debug_save_dynamic_pack": "debug目录保存动态资源包",
+  "snowyspirit.configuration.custom_configured_screen": "专属Configured配置界面",
+  "snowyspirit.configuration.mod_creative_tab": "创造标签页",
+
+
+
+  "snowyspirit.configuration.blocks_and_items": "方块与物品",
+
+  "snowyspirit.configuration.gumdrop": "橡皮糖",
+  "snowyspirit.configuration.glow_lights": "彩灯",
+  "snowyspirit.configuration.candy_cane": "拐杖糖",
+  "snowyspirit.configuration.ginger": "姜",
+  "snowyspirit.configuration.eggnog": "蛋奶酒",
+  "snowyspirit.configuration.wreath": "花环",
+  "snowyspirit.configuration.snow_globe": "雪景球",
+  "snowyspirit.configuration.gingerbread_golem": "姜饼傀儡",
+
+
+
+  "snowyspirit.configuration.sled": "雪橇",
+
+  "snowyspirit.configuration.physics": "物理效果",
+  "snowyspirit.configuration.friction": "摩擦力",
+  "snowyspirit.configuration.sand_slipperiness": "沙子光滑度",
+  "snowyspirit.configuration.snow_slipperiness": "雪光滑度",
+  "snowyspirit.configuration.ice_slipperiness_mult": "冰光滑度倍数",
+  "snowyspirit.configuration.slope_slipperiness_increment": "斜坡光滑度增量",
+  "snowyspirit.configuration.rotation_slipperiness": "转动光滑度",
+  "snowyspirit.configuration.rotation_slipperiness_on_forward_acceleration": "向前加速时的转动光滑度",
+  "snowyspirit.configuration.steering": "驾驶操控",
+  "snowyspirit.configuration.forward_acceleration": "向前加速度",
+  "snowyspirit.configuration.forward_acceleration_with_wolf": "有狼拖拽时的向前加速度",
+  "snowyspirit.configuration.forward_acceleration_when_not_on_snow": "不处于雪地时的向前加速度",
+  "snowyspirit.configuration.backwards_acceleration": "向后加速度",
+  "snowyspirit.configuration.steer_factor": "转向因数",
+  "snowyspirit.configuration.steer_factor_with_wolf": "有狼拖拽时的转向因数",
+
+  "snowyspirit.configuration.max_sled_puller_size": "可拖拽雪橇的生物的最大大小",
+
+
+
+
+
+  "snowyspirit.configuration.particles": "粒子",
+
+  "snowyspirit.configuration.glow_particle_mode": "彩灯粒子模式",
+  "snowyspirit.configuration.sled_sound_volume": "雪橇音效音量"
 }
