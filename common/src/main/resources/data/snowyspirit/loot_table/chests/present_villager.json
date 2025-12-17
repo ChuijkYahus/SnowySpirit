@@ -1,8 +1,14 @@
 {
   "fabric:load_conditions": [
     {
-      "modid": "supplementaries",
-      "condition": "fabric:mod_loaded"
+      "type": "fabric:mod_loaded",
+      "modid": "supplementaries"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "supplementaries"
     }
   ],
 
