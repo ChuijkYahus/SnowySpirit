@@ -290,6 +290,8 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
                 if (!this.decreaseIntegrity()) {
                     this.discard();
                 }
+                this.playSound(ModRegistry.GINGERBREAD_BLOCK.get().defaultBlockState()
+                                .getSoundType().getBreakSound(), 1, 1.2f);
                 player.playSound(player.getEatingSound(ModRegistry.GINGERBREAD_COOKIE.get().getDefaultInstance()));
                 player.getFoodData().eat(1, 0.1F);
                 level.gameEvent(player, GameEvent.EAT, this.blockPosition());
