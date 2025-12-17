@@ -75,12 +75,6 @@ public class ModRegistry {
         }
     }
 
-    @Deprecated(forRemoval = true)
-    public static final Supplier<EntityDataSerializer<WoodType>> WOOD_TYPE_SERIALIZER =
-            RegHelper.registerEntityDataSerializer(SnowySpirit.res("wood_type"),
-                    () -> EntityDataSerializer.forValueType(WoodType.STREAM_CODEC));
-
-
     public static final IAttachmentType<WreathData, ChunkAccess> WREATH_CHUNK_DATA = RegHelper.registerDataAttachment(
             SnowySpirit.res("wreath_data"),
             () -> RegHelper.AttachmentBuilder.create(WreathData::new)

@@ -8,6 +8,7 @@ import net.mehvahdjukaar.snowyspirit.configs.CommonConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -45,7 +46,7 @@ public abstract class IglooPiecesMixin extends TemplateStructurePiece {
 
 
     @Inject(method = "postProcess", at = @At("RETURN"))
-    private void addSleds(WorldGenLevel worldGenLevel, StructureManager structureManager,
+    private void snowySpirit$addSleds(WorldGenLevel worldGenLevel, StructureManager structureManager,
                           ChunkGenerator chunkGenerator, RandomSource pRandom, BoundingBox pBox,
                           ChunkPos chunkPos, BlockPos pos, CallbackInfo ci) {
 
@@ -63,7 +64,7 @@ public abstract class IglooPiecesMixin extends TemplateStructurePiece {
                 if (pBox.isInside(blockPos)) {
                     Level level = worldGenLevel.getLevel();
                     //bukkit doesn't like spawn calls from another thread...
-                    var server = level.getServer();
+                    MinecraftServer server = level.getServer();
                     if (server == null) return;
                     server.executeIfPossible(() -> {
                         SledEntity sledEntity = new SledEntity(level, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ());

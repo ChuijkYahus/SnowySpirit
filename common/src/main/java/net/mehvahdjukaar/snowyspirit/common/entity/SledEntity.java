@@ -25,6 +25,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.EntityTypeTags;
@@ -68,7 +69,7 @@ public class SledEntity extends Entity implements IControllableVehicle {
     private static final EntityDataAccessor<Float> DATA_ID_DAMAGE = SynchedEntityData.defineId(SledEntity.class, EntityDataSerializers.FLOAT);
 
     //sub optimal
-    private static final EntityDataAccessor<WoodType> DATA_WOOD_TYPE = SynchedEntityData.defineId(SledEntity.class, ModRegistry.WOOD_TYPE_SERIALIZER.get());
+    private static final EntityDataAccessor<WoodType> DATA_WOOD_TYPE = SynchedEntityData.defineId(SledEntity.class, WoodType.ENTITY_SERIALIZER.get());
     private static final EntityDataAccessor<Integer> DATA_SEAT_TYPE = SynchedEntityData.defineId(SledEntity.class, EntityDataSerializers.INT);
 
     //varInt is as efficient as byte
