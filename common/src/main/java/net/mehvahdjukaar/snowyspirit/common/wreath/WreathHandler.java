@@ -14,10 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-
 public class WreathHandler {
 
     public static boolean placeWreathOnDoor(BlockPos pos, Level level) {
@@ -35,7 +31,7 @@ public class WreathHandler {
                         BlockState state = ModRegistry.WREATH.get().defaultBlockState();
 
                         wreathData.setWreath(p, level);
-                        wreathData.markDirty(p, sl);
+                        wreathData.markDirtyAndSync(p, sl);
                         SoundType soundtype = state.getSoundType();
                         level.playSound(null, p, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                         //send packet to clients
@@ -63,27 +59,14 @@ public class WreathHandler {
         return InteractionResult.PASS;
     }
 
-    public static void tickEvent(ServerLevel level) {
-        ChunksWithWreaths data = ModRegistry.WREATH_WORLD_DATA.getData(level);
-        Iterator<ChunkAccess> chunks = data.getLoadedChunks(level).iterator();
-        while (chunks.hasNext()) {
-            ChunkAccess chunk = chunks.next();
-            WreathData c = ModRegistry.WREATH_CHUNK_DATA.getOrNull(chunk);
-            if (c != null) {
-                boolean changed = false;
-                //avoid concurrency
-                for (BlockPos p : new ArrayList<>(c.getWreathBlocks())) {
-                    BlockState state = level.getBlockState(p);
-                    if (!(state.getBlock() instanceof DoorBlock)) {
-                        c.removeWreath(p, level, true);
-                        changed = true;
-                    }
-                }
-                if (changed) {
-                    c.markDirty(chunk.getPos().getWorldPosition(), level);
-                }
+
+    public static void removeWreathAt(BlockPos pos, ServerLevel world) {
+        ChunkAccess chunk = world.getChunkAt(pos);
+        WreathData c = ModRegistry.WREATH_CHUNK_DATA.getOrNull(chunk);
+        if (c != null) {
+            if(c.removeWreath(pos, world, true)) {
+                c.markDirtyAndSync(pos, world);
             }
         }
     }
-
 }

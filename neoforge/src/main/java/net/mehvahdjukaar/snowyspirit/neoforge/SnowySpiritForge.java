@@ -68,13 +68,6 @@ public class SnowySpiritForge {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void tickEvent(LevelTickEvent.Post event) {
-        if (event.getLevel() instanceof ServerLevel level) {
-            WreathHandler.tickEvent(level);
-        }
-    }
-
     @SubscribeEvent
     public void onUseBlock(BlockEvent.EntityPlaceEvent event) {
         if (event.getPlacedBlock().getBlock() instanceof CarvedPumpkinBlock) {

@@ -2,8 +2,7 @@ package net.mehvahdjukaar.snowyspirit.common.wreath;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.mehvahdjukaar.moonlight.api.misc.WorldSavedData;
-import net.mehvahdjukaar.moonlight.api.misc.WorldSavedDataType;
+import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.moonlight.api.platform.network.NetworkHelper;
 import net.mehvahdjukaar.snowyspirit.common.network.ClientBoundMarkPosForRebuildMessage;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
@@ -15,11 +14,10 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LevelEvent;
-import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class WreathData {
 
@@ -47,15 +45,17 @@ public class WreathData {
         wreathBlocks.add(pos);
     }
 
-    public void removeWreath(BlockPos p, Level level, boolean animationAndDrop) {
-        wreathBlocks.remove(p);
-        if (animationAndDrop) {
+    public boolean removeWreath(BlockPos p, Level level, boolean animationAndDrop) {
+
+        boolean remove = wreathBlocks.remove(p);
+        if (remove && animationAndDrop) {
             ItemEntity itementity = new ItemEntity(level, p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5,
                     ModRegistry.WREATH.get().asItem().getDefaultInstance());
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
             level.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, p, Block.getId(ModRegistry.WREATH.get().defaultBlockState()));
         }
+        return remove;
     }
 
     public Set<BlockPos> getWreathBlocks() {
@@ -70,7 +70,7 @@ public class WreathData {
         return this.wreathBlocks.contains(p);
     }
 
-    public void markDirty(BlockPos pos, ServerLevel level) {
+    public void markDirtyAndSync(BlockPos pos, ServerLevel level) {
         //save chunk
         level.getChunkAt(pos).setUnsaved(true);
         //sync to clients
@@ -79,7 +79,8 @@ public class WreathData {
         NetworkHelper.sendToAllClientPlayersTrackingChunk(level, new ChunkPos(pos),
                 new ClientBoundMarkPosForRebuildMessage(pos));
         //mark as a chunk that has wreath on server
-        ModRegistry.WREATH_WORLD_DATA.getData(level).updateStatus(new ChunkPos(pos), wreathBlocks.isEmpty());
+        if (PlatHelper.getPlatform().isFabric())
+            ModRegistry.WREATH_WORLD_DATA.getData(level).updateStatus(new ChunkPos(pos), wreathBlocks.isEmpty());
     }
 
     public boolean hasWreathsInSection(int minY, int maxY) {

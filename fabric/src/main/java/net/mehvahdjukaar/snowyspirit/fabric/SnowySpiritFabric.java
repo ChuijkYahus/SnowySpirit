@@ -3,9 +3,13 @@ package net.mehvahdjukaar.snowyspirit.fabric;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.InvalidateRenderStateCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.impl.client.model.loading.ModelLoadingEventDispatcher;
+import net.fabricmc.fabric.impl.client.rendering.v0.RenderingCallbackInvoker;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.client.WreathRenderer;
@@ -29,8 +33,6 @@ public class SnowySpiritFabric implements ModInitializer {
                 WreathRenderer.renderAllWreaths(context.matrixStack());
             });
         }
-
-        ServerTickEvents.END_WORLD_TICK.register(WreathHandler::tickEvent);
 
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) ->
                 WreathHandler.onRightClickBlock(player, world, player.getItemInHand(hand), hitResult.getBlockPos()));

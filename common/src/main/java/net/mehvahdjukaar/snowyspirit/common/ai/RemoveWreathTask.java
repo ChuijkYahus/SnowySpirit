@@ -100,8 +100,9 @@ public class RemoveWreathTask extends Behavior<Villager> {
                     if (ticksSinceReached > 10) {
 
                         pOwner.getBrain().eraseMemory(ModMemoryModules.WREATH_POS.get());
-                        c.removeWreath(pos, level, true);
-                        c.markDirty(pos, level);
+                        if (c.removeWreath(pos, level, true)) {
+                            c.markDirtyAndSync(pos, level);
+                        }
                     }
                     return;
                 }

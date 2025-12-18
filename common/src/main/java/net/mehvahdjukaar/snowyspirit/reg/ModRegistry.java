@@ -82,7 +82,9 @@ public class ModRegistry {
                     .persistent(WreathData.CODEC)
                     .copyOnDeath(), ChunkAccess.class);
 
-    public static final WorldSavedDataType<ChunksWithWreaths> WREATH_WORLD_DATA = RegHelper.registerWorldSavedData(
+    public static final WorldSavedDataType<ChunksWithWreaths> WREATH_WORLD_DATA =
+            PlatHelper.getPlatform().isForge() ? null:
+            RegHelper.registerWorldSavedData(
             SnowySpirit.res("wreath_chunks"),
             (s) -> new ChunksWithWreaths(), ChunksWithWreaths.CODEC,
             PlatHelper.getPlatform().isFabric() ? ChunksWithWreaths.STREAM_CODEC : null, true);
