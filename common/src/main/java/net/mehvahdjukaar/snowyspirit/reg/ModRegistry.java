@@ -87,7 +87,7 @@ public class ModRegistry {
             RegHelper.registerWorldSavedData(
             SnowySpirit.res("wreath_chunks"),
             (s) -> new ChunksWithWreaths(), ChunksWithWreaths.CODEC,
-            PlatHelper.getPlatform().isFabric() ? ChunksWithWreaths.STREAM_CODEC : null, true);
+             ChunksWithWreaths.STREAM_CODEC, true);
 
 
     public static final BlockSetType GINGER_TYPE = BlockSetType.register(new BlockSetType(SnowySpirit.res("ginger").toString()));

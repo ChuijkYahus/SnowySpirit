@@ -64,10 +64,12 @@ public class ChunksWithWreaths extends WorldSavedData {
         if (empty) {
             if (chunksWithWreaths.remove(chunkPos)) {
                 this.setDirty();
+                this.sync();
             }
         } else {
             if (chunksWithWreaths.add(chunkPos)) {
                 this.setDirty();
+                this.sync();
             }
         }
     }

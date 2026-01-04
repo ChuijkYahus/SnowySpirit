@@ -1,1 +1,2 @@
-fixed house not spawning
+fixed an issue on fabric
+minor fixes
