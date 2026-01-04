@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class DoorBlockMixin {
 
     @Inject(method = "onRemove", at = @At("RETURN"))
-    private void onRemoveInject(BlockState oldState,
+    private void snowySpirit$removeWreaths(BlockState oldState,
                                 Level world,
                                 BlockPos pos,
                                 BlockState newState,
