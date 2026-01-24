@@ -91,5 +91,7 @@
   "message.snowyspirit.container_entity_name": "Sled %s",
   "subtitle.snowyspirit.music_disc.a_carol": "A Carol",
   "subtitle.snowyspirit.sled": "Sled sliding",
-  "tab.snowyspirit": "Snowy Spirit"
+  "tab.snowyspirit": "Snowy Spirit",
+  "tag.item.snowyspirit.gumdrops": "Gumdrops",
+  "tag.item.snowyspirit.sleds": "Sleds"
 }
