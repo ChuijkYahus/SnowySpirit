@@ -12,6 +12,7 @@ import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
+import net.mehvahdjukaar.moonlight.api.util.math.ColorUtils;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.common.wreath.ChunksWithWreaths;
 import net.mehvahdjukaar.snowyspirit.common.wreath.WreathData;
@@ -210,8 +211,8 @@ public class ModRegistry {
 
     public static final String GLOW_LIGHTS_NAME = "glow_lights";
     public static final Map<DyeColor, Supplier<Block>> GLOW_LIGHTS_BLOCKS = Util.make(() -> {
-        var m = new HashMap<DyeColor, Supplier<Block>>();
-        for (DyeColor c : DyeColor.values()) {
+        var m = new LinkedHashMap<DyeColor, Supplier<Block>>();
+        for (DyeColor c : BlocksColorAPI.SORTED_COLORS) {
             m.put(c, regBlock(GLOW_LIGHTS_NAME + "_" + c.getName(), () -> new GlowLightsBlock(c)));
         }
         m.put(null, regBlock(GLOW_LIGHTS_NAME + "_prismatic", () -> new GlowLightsBlock(null)));
@@ -219,7 +220,7 @@ public class ModRegistry {
     });
 
     public static final Map<DyeColor, Supplier<Item>> GLOW_LIGHTS_ITEMS = Util.make(() -> {
-        var m = new HashMap<DyeColor, Supplier<Item>>();
+        var m = new LinkedHashMap<DyeColor, Supplier<Item>>();
         for (DyeColor c : BlocksColorAPI.SORTED_COLORS) {
             m.put(c, regItem("glow_lights_" + c.getName(), () -> new GlowLightsItem(GLOW_LIGHTS_BLOCKS.get(c).get())));
         }

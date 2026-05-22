@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -119,6 +120,7 @@ public class WreathRenderer {
         int minY = origin.getY();
         int maxY = minY + 16;
         WreathData data = ModRegistry.WREATH_CHUNK_DATA.getOrNull(chunk);
+        if (data == null) return;
         RandomSource random = RandomSource.create();
         VertexConsumer vc = null;
         BlockState wreath = ModRegistry.WREATH.get().defaultBlockState();
@@ -130,11 +132,12 @@ public class WreathRenderer {
                     vc = getOrCreateChunkBuffer.apply(RenderType.cutout());
                 }
                 BlockState doorState = level.getBlockState(pos);
-                pos = pos.subtract(origin);
+
+               BlockPos relativePos = pos.subtract(origin);
                 poseStack.pushPose();
-                poseStack.translate(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+                poseStack.translate(relativePos.getX() + 0.5, relativePos.getY() + 0.5, relativePos.getZ() + 0.5);
 
-
+                BakedModel blockModel = blockRenderer.getBlockModel(wreath);
                 if (doorState.getBlock() instanceof DoorBlock) {
                     Direction dir = doorState.getValue(DoorBlock.FACING);
                     boolean open = doorState.getValue(DoorBlock.OPEN);
@@ -152,23 +155,24 @@ public class WreathRenderer {
                     poseStack.pushPose();
                     poseStack.mulPose(Axis.YP.rotationDegrees(-dir.toYRot()));
                     poseStack.translate(-0.5, -0.5, -0.5 + dim.y);
-                    blockRenderer.getModelRenderer().tesselateBlock(level, blockRenderer.getBlockModel(wreath), wreath,
+                    blockRenderer.getModelRenderer().tesselateBlock(level, blockModel, wreath,
                             pos, poseStack, vc, false, random,
-                            wreath.getSeed(BlockPos.ZERO), OverlayTexture.NO_OVERLAY);
+                            42, OverlayTexture.NO_OVERLAY);
+
                     poseStack.popPose();
 
                     poseStack.pushPose();
                     poseStack.mulPose(Axis.YP.rotationDegrees(-dir.getOpposite().toYRot()));
                     poseStack.translate(-0.5, -0.5, -0.5 + dim.x);
-                    blockRenderer.getModelRenderer().tesselateBlock(level, blockRenderer.getBlockModel(wreath), wreath,
+                    blockRenderer.getModelRenderer().tesselateBlock(level, blockModel, wreath,
                             pos, poseStack, vc, false, random,
-                            wreath.getSeed(BlockPos.ZERO), OverlayTexture.NO_OVERLAY);
+                            42, OverlayTexture.NO_OVERLAY);
                     poseStack.popPose();
                 } else {
                     poseStack.translate(-0.5, -0.5, -0.5);
-                    blockRenderer.getModelRenderer().tesselateBlock(level, blockRenderer.getBlockModel(wreath), wreath,
+                    blockRenderer.getModelRenderer().tesselateBlock(level, blockModel, wreath,
                             pos, poseStack, vc, false, random,
-                            wreath.getSeed(BlockPos.ZERO), OverlayTexture.NO_OVERLAY);
+                            42, OverlayTexture.NO_OVERLAY);
                 }
 
 

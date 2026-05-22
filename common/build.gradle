@@ -35,9 +35,8 @@ dependencies {
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
 
-    modApi("net.mehvahdjukaar:moonlight:${moonlight_version}") {
-        transitive = true
-    }
+    //modApi("net.mehvahdjukaar:moonlight:${moonlight_version}")
+    modImplementation("curse.maven:selene-499980:8125569")
 
 
     modCompileOnly("curse.maven:farmers-delight-398521:5772720")

@@ -88,9 +88,8 @@ dependencies {
 
     implementation 'org.jetbrains:annotations:22.0.0'
 
-        modApi("net.mehvahdjukaar:moonlight-neoforge:${moonlight_version}"){
-            transitive = false
-        }
+       // modApi("net.mehvahdjukaar:moonlight-neoforge:${moonlight_version}")
+    modImplementation("curse.maven:selene-499980:8125569")
 
 
     modCompileOnly("curse.maven:jei-238222:5846880")

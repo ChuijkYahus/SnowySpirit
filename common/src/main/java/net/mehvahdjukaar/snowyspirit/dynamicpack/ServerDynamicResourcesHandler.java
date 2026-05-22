@@ -1,5 +1,6 @@
 package net.mehvahdjukaar.snowyspirit.dynamicpack;
 
+import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.RecipeTemplate;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
@@ -10,6 +11,7 @@ import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
+import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -24,7 +26,8 @@ public class ServerDynamicResourcesHandler extends DynamicServerResourceProvider
     public static final ServerDynamicResourcesHandler INSTANCE = new ServerDynamicResourcesHandler();
 
     public ServerDynamicResourcesHandler() {
-        super(SnowySpirit.res("generated_pack"), PackGenerationStrategy.CACHED);
+        super(SnowySpirit.res("generated_pack"), PlatHelper.isDev() ?
+                PackGenerationStrategy.REGEN_ON_EVERY_RELOAD :  PackGenerationStrategy.CACHED);
     }
 
     @Override
@@ -48,7 +51,8 @@ public class ServerDynamicResourcesHandler extends DynamicServerResourceProvider
 
         ModRegistry.SLED_ITEMS.forEach((w, b) -> {
             if (w != VanillaWoodTypes.OAK) {
-                var newR = RecipeTemplate.makeSimilarRecipe(recipeTemplate, VanillaWoodTypes.OAK, w, id);
+                var newR = RecipeTemplate.makeSimilarRecipe(recipeTemplate, VanillaWoodTypes.OAK, w,
+                        SnowySpirit.res("sled" + "_" + w.getTypeName()));
                 sink.addRecipe(newR);
             }
         });
