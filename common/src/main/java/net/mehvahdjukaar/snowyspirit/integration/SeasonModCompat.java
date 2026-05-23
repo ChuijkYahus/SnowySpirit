@@ -1,5 +1,6 @@
 package net.mehvahdjukaar.snowyspirit.integration;
 
+import net.mehvahdjukaar.candlelight.api.PlatformImpl;
 import net.mehvahdjukaar.moonlight.api.platform.configs.ConfigBuilder;
 import net.minecraft.world.level.Level;
 

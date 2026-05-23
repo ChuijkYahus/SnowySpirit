@@ -1,6 +1,6 @@
 package net.mehvahdjukaar.snowyspirit.common.entity;
 
-import dev.architectury.injectables.annotations.PlatformOnly;
+import net.mehvahdjukaar.candlelight.api.VirtualOverride;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.integration.supp.SuppCompat;
@@ -283,8 +283,7 @@ public class ContainerHolderEntity extends Entity implements Container, MenuProv
         return this.entityData.get(DATA_ID_HURT);
     }
 
-    //@Override
-    @PlatformOnly(PlatformOnly.FORGE)
+    @VirtualOverride("neoforge")
     public ItemStack getPickedResult(HitResult target) {
         return this.getContainerItem().copy();
     }

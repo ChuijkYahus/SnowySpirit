@@ -141,7 +141,7 @@ public class SledEntity extends Entity implements IControllableVehicle {
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         if (tag.contains("Type", 8)) {
-            this.setWoodType(WoodTypeRegistry.fromNBT(tag.getString("Type")));
+            this.setWoodType(WoodTypeRegistry.INSTANCE.get(ResourceLocation.parse( tag.getString("Type"))));
         }
         if (tag.contains("Seat", 99)) {
             this.setSeatType(DyeColor.byId(tag.getInt("Seat")));

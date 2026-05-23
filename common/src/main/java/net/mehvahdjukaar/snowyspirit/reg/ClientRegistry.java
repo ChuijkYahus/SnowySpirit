@@ -85,6 +85,11 @@ public class ClientRegistry {
 
     }
 
+    public static void markBlocksForReRender(BlockPos pos) {
+            Minecraft.getInstance().levelRenderer.setBlocksDirty(pos.getX(), pos.getY(), pos.getZ(),
+                    pos.getX(), pos.getY(), pos.getZ());
+    }
+
 
     private static class MimicBlockColor implements BlockColor {
 
