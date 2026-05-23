@@ -1,4 +1,4 @@
-package net.mehvahdjukaar.snowyspirit.integration.fabric;
+package net.mehvahdjukaar.snowyspirit.integration.platform;
 
 import io.github.lucaargolo.seasons.FabricSeasons;
 import io.github.lucaargolo.seasons.utils.Season;

@@ -1,4 +1,4 @@
-package net.mehvahdjukaar.snowyspirit.neoforge;
+package net.mehvahdjukaar.snowyspirit.platform;
 
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.ItemAbilities;

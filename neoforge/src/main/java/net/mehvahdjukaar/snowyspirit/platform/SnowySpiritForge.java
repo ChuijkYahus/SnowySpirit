@@ -1,4 +1,4 @@
-package net.mehvahdjukaar.snowyspirit.neoforge;
+package net.mehvahdjukaar.snowyspirit.platform;
 
 import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
@@ -8,7 +8,6 @@ import net.mehvahdjukaar.snowyspirit.common.entity.GolemHelper;
 import net.mehvahdjukaar.snowyspirit.common.wreath.WreathHandler;
 import net.mehvahdjukaar.snowyspirit.integration.configured.ModConfigSelectScreen;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarvedPumpkinBlock;
@@ -23,7 +22,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 /**

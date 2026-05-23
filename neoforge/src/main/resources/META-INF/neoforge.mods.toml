@@ -1,6 +1,5 @@
 
 modLoader = "javafml"
-loaderVersion = "*"
 
 license = "${mod_license}"
 issueTrackerURL = "${mod_github}/issues"
@@ -19,30 +18,30 @@ issueTrackerURL = "${mod_github}/issues"
     credits = "${mod_credits}"
     description = '''${mod_description}'''
     modUrl = "${mod_homepage}"
-    itemIcon = "snowyspirit:sled_oak" #catalogue icon
+    itemIcon = "snowyspirit:sled_oak"
 
 [modproperties.snowyspirit]
-catalogueItemIcon = "snowyspirit:sled_oak" #catalogue icon
+catalogueItemIcon = "snowyspirit:sled_oak"
 configuredBackground = "snowyspirit:textures/blocks/gingerbread_frosted_block.png"
-
 
 [[dependencies.${mod_id}]]
     modId = "neoforge"
     type = "required"
-    versionRange = "${neo_version_range}"
+    versionRange = "*"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.${mod_id}]]
     modId = "minecraft"
     type = "required"
-    versionRange = "[${minecraft_min_version},${minecraft_max_version})"
+    versionRange = "[${minecraft_version}]"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.${mod_id}]]
-modId = "moonlight"
-type = "REQUIRED"
-versionRange = "[${moonlight_min_version},)"
-ordering = "NONE"
-side = "BOTH"
+    modId = "moonlight"
+    type = "required"
+    referralUrl = "https://www.curseforge.com/minecraft/mc-mods/selene"
+    versionRange = "[${moonlight_min_version},)"
+    ordering = "NONE"
+    side = "BOTH"

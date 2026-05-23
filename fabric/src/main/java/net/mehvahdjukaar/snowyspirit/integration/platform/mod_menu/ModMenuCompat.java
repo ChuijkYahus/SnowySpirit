@@ -1,4 +1,4 @@
-package net.mehvahdjukaar.snowyspirit.integration.fabric.mod_menu;
+package net.mehvahdjukaar.snowyspirit.integration.platform.mod_menu;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

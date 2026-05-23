@@ -1,7 +1,5 @@
-package net.mehvahdjukaar.snowyspirit.integration.fabric.mod_menu;
+package net.mehvahdjukaar.snowyspirit.integration.platform.mod_menu;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.mehvahdjukaar.moonlight.api.client.gui.MediaButton;
 import net.mehvahdjukaar.moonlight.api.platform.configs.fabric.FabricConfigListScreen;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.configs.ClientConfigs;

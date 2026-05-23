@@ -1,4 +1,4 @@
-package net.mehvahdjukaar.snowyspirit.fabric;
+package net.mehvahdjukaar.snowyspirit.platform;
 
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.world.item.ItemStack;
