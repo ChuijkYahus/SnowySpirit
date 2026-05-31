@@ -1,16 +1,26 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {"item": "snowyspirit:gingerbread"},
-    {"item": "minecraft:sugar"}
-  ],
-  "result": {
-    "id": "snowyspirit:gingerbread_frosted"
-  },
   "fabric:load_conditions": [
     {
       "condition": "snowyspirit:flag",
       "flag": "ginger"
     }
-  ]
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "snowyspirit:gingerbread"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "id": "snowyspirit:gingerbread_frosted"
+  }
 }

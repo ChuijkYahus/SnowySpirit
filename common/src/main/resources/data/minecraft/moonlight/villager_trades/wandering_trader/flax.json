@@ -1,8 +1,14 @@
 {
   "fabric:load_conditions": [
     {
-      "flag": "ginger",
-      "condition": "snowyspirit:flag"
+      "condition": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "ginger"
     }
   ],
   "type": "simple",

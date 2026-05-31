@@ -1,19 +1,33 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {"item": "minecraft:hay_block"},
-    {"item": "snowyspirit:ginger"},
-    {"item": "snowyspirit:ginger"},
-    {"item": "snowyspirit:ginger"}
-  ],
-  "result": {
-    "id": "snowyspirit:gingerbread",
-    "count": 6
-  },
   "fabric:load_conditions": [
     {
       "condition": "snowyspirit:flag",
       "flag": "ginger"
     }
-  ]
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:hay_block"
+    },
+    {
+      "item": "snowyspirit:ginger"
+    },
+    {
+      "item": "snowyspirit:ginger"
+    },
+    {
+      "item": "snowyspirit:ginger"
+    }
+  ],
+  "result": {
+    "id": "snowyspirit:gingerbread",
+    "count": 6
+  }
 }

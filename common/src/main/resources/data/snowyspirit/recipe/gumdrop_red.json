@@ -1,17 +1,27 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "group": "gumdrop",
-  "ingredients": [
-    {"item": "minecraft:sugar"},
-    {"tag": "c:dyes/red"}
-  ],
-  "result": {
-    "id": "snowyspirit:gumdrop_red"
-  },
   "fabric:load_conditions": [
     {
       "condition": "snowyspirit:flag",
       "flag": "gumdrops"
     }
-  ]
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "gumdrops"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "group": "gumdrop",
+  "ingredients": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "c:dyes/red"
+    }
+  ],
+  "result": {
+    "id": "snowyspirit:gumdrop_red"
+  }
 }

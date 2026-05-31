@@ -1,17 +1,16 @@
 {
   "fabric:load_conditions": [
     {
-      "type": "fabric:mod_loaded",
+      "condition": "neofabric:mod_loaded",
       "modid": "supplementaries"
     }
   ],
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
+      "type": "neoneoforge:mod_loaded",
       "modid": "supplementaries"
     }
   ],
-
   "type": "minecraft:chest",
   "pools": [
     {
@@ -186,15 +185,15 @@
           ],
           "name": "supplementaries:flute"
         },
-		{
+        {
           "type": "minecraft:item",
           "weight": 2,
           "functions": [
             {
               "function": "minecraft:set_name",
-				"name": {
-					"text": "mehvahdjukaar"
-				}
+              "name": {
+                "text": "mehvahdjukaar"
+              }
             }
           ],
           "name": "supplementaries:statue"

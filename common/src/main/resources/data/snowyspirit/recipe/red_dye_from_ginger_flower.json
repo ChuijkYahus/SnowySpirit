@@ -1,15 +1,23 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {"item": "snowyspirit:ginger_flower"}
-  ],
-  "result": {
-    "id": "minecraft:red_dye"
-  },
   "fabric:load_conditions": [
     {
       "condition": "snowyspirit:flag",
       "flag": "ginger"
     }
-  ]
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "snowyspirit:ginger_flower"
+    }
+  ],
+  "result": {
+    "id": "minecraft:red_dye"
+  }
 }

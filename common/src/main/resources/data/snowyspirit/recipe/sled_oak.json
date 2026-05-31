@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "snowyspirit:flag",
+      "flag": "sleds"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "sleds"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "##S",
@@ -14,11 +26,5 @@
   },
   "result": {
     "id": "snowyspirit:sled_oak"
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "snowyspirit:flag",
-      "flag": "sleds"
-    }
-  ]
+  }
 }

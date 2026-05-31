@@ -1,20 +1,32 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {"item": "snowyspirit:ginger_crate"}
-  ],
-  "result": {
-    "id": "snowyspirit:ginger",
-    "count": 9
-  },
   "fabric:load_conditions": [
     {
-      "modid": "farmersdelight",
-      "condition": "fabric:mod_loaded"
+      "condition": "neofabric:mod_loaded",
+      "modid": "farmersdelight"
     },
     {
       "condition": "snowyspirit:flag",
       "flag": "ginger"
     }
-  ]
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoneoforge:mod_loaded",
+      "modid": "farmersdelight"
+    },
+    {
+      "type": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "snowyspirit:ginger_crate"
+    }
+  ],
+  "result": {
+    "id": "snowyspirit:ginger",
+    "count": 9
+  }
 }

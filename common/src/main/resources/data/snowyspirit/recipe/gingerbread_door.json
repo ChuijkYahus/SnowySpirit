@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "group": "wooden_door",
   "pattern": [
@@ -14,11 +26,5 @@
   "result": {
     "id": "snowyspirit:gingerbread_door",
     "count": 3
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "snowyspirit:flag",
-      "flag": "ginger"
-    }
-  ]
+  }
 }

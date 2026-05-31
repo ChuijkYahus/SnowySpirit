@@ -1,4 +1,24 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "neofabric:mod_loaded",
+      "modid": "farmersdelight"
+    },
+    {
+      "condition": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoneoforge:mod_loaded",
+      "modid": "farmersdelight"
+    },
+    {
+      "type": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "111",
@@ -13,15 +33,5 @@
   "result": {
     "id": "snowyspirit:ginger_crate",
     "count": 1
-  },
-  "fabric:load_conditions": [
-    {
-      "modid": "farmersdelight",
-      "condition": "fabric:mod_loaded"
-    },
-    {
-      "condition": "snowyspirit:flag",
-      "flag": "ginger"
-    }
-  ]
+  }
 }

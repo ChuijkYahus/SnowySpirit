@@ -1,16 +1,24 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {"item": "snowyspirit:candy_cane_block"}
-  ],
-  "result": {
-    "id": "snowyspirit:candy_cane",
-    "count": 4
-  },
   "fabric:load_conditions": [
     {
       "condition": "snowyspirit:flag",
       "flag": "candy_cane"
     }
-  ]
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "candy_cane"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "snowyspirit:candy_cane_block"
+    }
+  ],
+  "result": {
+    "id": "snowyspirit:candy_cane",
+    "count": 4
+  }
 }

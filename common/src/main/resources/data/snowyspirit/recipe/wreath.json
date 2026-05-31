@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "snowyspirit:flag",
+      "flag": "wreath"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "wreath"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " # ",
@@ -13,11 +25,5 @@
   "result": {
     "id": "snowyspirit:wreath",
     "count": 1
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "snowyspirit:flag",
-      "flag": "wreath"
-    }
-  ]
+  }
 }

@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "snowyspirit:flag",
+      "flag": "snow_globe"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "snow_globe"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "#",
@@ -14,11 +26,5 @@
   },
   "result": {
     "id": "snowyspirit:snow_globe"
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "snowyspirit:flag",
-      "flag": "snow_globe"
-    }
-  ]
+  }
 }

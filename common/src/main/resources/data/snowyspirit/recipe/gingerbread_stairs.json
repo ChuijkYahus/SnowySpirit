@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "snowyspirit:flag",
+      "flag": "ginger"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "#  ",
@@ -10,12 +22,6 @@
       "item": "snowyspirit:gingerbread"
     }
   },
-  "fabric:load_conditions": [
-    {
-      "condition": "snowyspirit:flag",
-      "flag": "ginger"
-    }
-  ],
   "result": {
     "id": "snowyspirit:gingerbread_stairs",
     "count": 4
