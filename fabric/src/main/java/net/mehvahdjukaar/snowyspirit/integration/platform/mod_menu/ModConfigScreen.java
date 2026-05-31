@@ -1,6 +1,6 @@
 package net.mehvahdjukaar.snowyspirit.integration.platform.mod_menu;
 
-import net.mehvahdjukaar.moonlight.api.platform.configs.fabric.FabricConfigListScreen;
+import net.mehvahdjukaar.moonlight.api.platform.configs.platform.FabricConfigListScreen;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.configs.ClientConfigs;
 import net.mehvahdjukaar.snowyspirit.configs.CommonConfigs;

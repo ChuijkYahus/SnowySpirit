@@ -1,1 +1,1 @@
-- random fixes
+- fixed conditions 

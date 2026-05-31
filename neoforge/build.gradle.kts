@@ -23,5 +23,6 @@ dependencies {
     modCompileOnly("curse.maven:biomes-o-plenty-220318:4683058")
     modCompileOnly("curse.maven:terrablender-563928:4647094")
     modCompileOnly("curse.maven:configured-457570:5180900")
+    modCompileOnly("curse.maven:entity-texture-features-fabric-568563:5000985")
 
 }
