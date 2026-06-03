@@ -15,6 +15,7 @@
   "block.snowyspirit.gingerbread_stairs": "姜饼楼梯",
   "block.snowyspirit.gingerbread_trapdoor": "姜饼活板门",
   "block.snowyspirit.glow_lights_black": "黑色彩灯",
+  "block.snowyspirit.glow_lights_prismatic": "五彩彩灯",
   "block.snowyspirit.glow_lights_blue": "蓝色彩灯",
   "block.snowyspirit.glow_lights_brown": "棕色彩灯",
   "block.snowyspirit.glow_lights_cyan": "青色彩灯",
@@ -91,6 +92,8 @@
   "subtitle.snowyspirit.music_disc.a_carol": "A Carol",
   "subtitle.snowyspirit.sled": "雪橇：滑行",
   "tab.snowyspirit": "Snowy Spirit",
+  "tag.item.snowyspirit.gumdrops": "橡皮糖",
+  "tag.item.snowyspirit.sleds": "雪橇",
 
 
 
