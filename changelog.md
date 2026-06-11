@@ -1,1 +1,1 @@
-- fixed conditions 
+- added loader version so neoforge doesnt complain
