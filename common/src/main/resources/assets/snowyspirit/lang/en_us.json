@@ -93,5 +93,19 @@
   "subtitle.snowyspirit.sled": "Sled sliding",
   "tab.snowyspirit": "Snowy Spirit",
   "tag.item.snowyspirit.gumdrops": "Gumdrops",
-  "tag.item.snowyspirit.sleds": "Sleds"
+  "tag.item.snowyspirit.sleds": "Sleds",
+  "tag.block.snowyspirit.gingerbreads": "Gingerbreads",
+  "tag.block.snowyspirit.glow_lights": "Glow Lights",
+  "tag.block.snowyspirit.glow_lights_placeable": "Glow Lights Placeable",
+  "tag.block.snowyspirit.gumdrops": "Gumdrops",
+  "tag.block.snowyspirit.sled_sand": "Sled Sand",
+  "tag.block.snowyspirit.sled_snow": "Sled Snow",
+  "tag.entity_type.snowyspirit.gingy_targets": "Gingy Targets",
+  "tag.entity_type.snowyspirit.sled_pullers": "Sled Pullers",
+  "tag.item.snowyspirit.gingerbreads": "Gingerbreads",
+  "tag.item.snowyspirit.glow_lights": "Glow Lights",
+  "tag.item.snowyspirit.sled_container": "Sled Container",
+  "tag.worldgen.snowyspirit.biome.has_gingerbread_house": "Has Gingerbread House",
+  "tag.worldgen.snowyspirit.biome.has_wild_ginger": "Has Wild Ginger",
+  "tag.worldgen.snowyspirit.biome.has_wild_ginger_dense": "Has Wild Ginger Dense"
 }
