@@ -13,14 +13,13 @@
   },
   "license": "${mod_license}",
   "icon": "icon.png",
-  "accessWidener": "snowyspirit.accesswidener",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.mehvahdjukaar.snowyspirit.platform.SnowySpiritFabric"
+      "net.mehvahdjukaar.snowyspirit.fabric.SnowySpiritFabric"
     ],
     "modmenu": [
-      "net.mehvahdjukaar.snowyspirit.integration.platform.mod_menu.ModMenuCompat"
+      "net.mehvahdjukaar.snowyspirit.integration.fabric.mod_menu.ModMenuCompat"
     ]
   },
   "mixins": [

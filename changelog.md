@@ -1,1 +1,1 @@
-fixed a recipe condition
+- added loader version so neoforge doesnt complain

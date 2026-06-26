@@ -13,11 +13,7 @@ val supplementaries_version: String by extra
 dependencies {
     modImplementation("net.mehvahdjukaar:moonlight-fabric:${moonlight_version}")
 
-    modCompileOnly("net.mehvahdjukaar:supplementaries-fabric:${supplementaries_version}") {
-        // We already provide moonlight explicitly above; Supplementaries' metadata requests
-        // moonlight-fabric with a `fabric` classifier that Loom can't resolve, so drop the transitive copy.
-        exclude(group = "net.mehvahdjukaar", module = "moonlight-fabric")
-    }
+    modImplementation("net.mehvahdjukaar:supplementaries-fabric:${supplementaries_version}")
 
     modCompileOnly("curse.maven:yacl-667299:4574163")
     modCompileOnly("com.terraformersmc:modmenu:4.0.6")
