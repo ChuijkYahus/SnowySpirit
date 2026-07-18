@@ -51,8 +51,6 @@ public class CommonConfigs {
         builder.pop();
 
         builder.push("misc");
-        CUSTOM_CONFIGURED_SCREEN = builder.comment("Enables custom Configured config screen")
-                .define("custom_configured_screen", true);
         MOD_TAB = builder.define("mod_creative_tab", false);
         builder.pop();
 
@@ -137,8 +135,6 @@ public class CommonConfigs {
     public static final Supplier<Boolean> SEASONS_MOD_COMPAT;
 
     public static final Supplier<Boolean> MOD_TAB;
-
-    public static final Supplier<Boolean> CUSTOM_CONFIGURED_SCREEN;
 
     public static final Supplier<Double> SAND_FRICTION;
     public static final Supplier<Double> SNOW_FRICTION;

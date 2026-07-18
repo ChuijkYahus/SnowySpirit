@@ -34,6 +34,9 @@ public class GlowLightParticle extends TextureSheetParticle {
     private GlowLightParticle(ClientLevel arg, double d, double e, double f, SpriteSet sprites) {
         super(arg, d, e, f);
         this.sprites = sprites;
+        // Sodium's particle path reads this.sprite directly instead of calling renderRotatedQuad,
+        // so a sprite must be set here or it NPEs before our override ever runs.
+        this.setSprite(sprites.get(0, 3));
         this.gravity = 0.0F;
         this.lifetime = 19 + this.random.nextInt(12);
         this.hasPhysics = false;

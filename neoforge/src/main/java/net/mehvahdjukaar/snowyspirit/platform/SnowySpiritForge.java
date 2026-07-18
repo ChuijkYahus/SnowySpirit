@@ -6,7 +6,6 @@ import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.snowyspirit.SnowySpirit;
 import net.mehvahdjukaar.snowyspirit.common.entity.GolemHelper;
 import net.mehvahdjukaar.snowyspirit.common.wreath.WreathHandler;
-import net.mehvahdjukaar.snowyspirit.integration.configured.ModConfigSelectScreen;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.Blocks;
@@ -33,14 +32,6 @@ public class SnowySpiritForge {
     public SnowySpiritForge(IEventBus busEvent) {
 
         SnowySpirit.commonInit();
-
-        if (PlatHelper.getPhysicalSide().isClient()) {
-            ClientHelper.addClientSetup(() -> {
-                if (ModList.get().isLoaded("configured")) {
-                    ModConfigSelectScreen.registerConfigScreen(SnowySpirit.MOD_ID, ModConfigSelectScreen::new);
-                }
-            });
-        }
 
         NeoForge.EVENT_BUS.register(this);
         PlatHelper.addCommonSetup(() -> {
