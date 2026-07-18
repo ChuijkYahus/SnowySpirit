@@ -9,10 +9,13 @@ neoforge {
 
 val moonlight_version: String by extra
 val supplementaries_version: String by extra
+val codecui_version: String by extra
 
 dependencies {
     modImplementation("net.mehvahdjukaar:moonlight-neoforge:${moonlight_version}")
     accessTransformers("net.mehvahdjukaar:moonlight-neoforge:${moonlight_version}")
+    // JiJ'd into Moonlight, so not on the dev runtime classpath — add explicitly to avoid missing schema codec class.
+    modRuntimeOnly("net.mehvahdjukaar:codecui-neoforge:${codecui_version}")
 
     modImplementation("net.mehvahdjukaar:supplementaries-neoforge:${supplementaries_version}")
     modCompileOnly("curse.maven:entity-model-features-844662:8063559")
