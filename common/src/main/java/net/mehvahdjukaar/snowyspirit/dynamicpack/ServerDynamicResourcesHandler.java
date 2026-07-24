@@ -1,8 +1,6 @@
 package net.mehvahdjukaar.snowyspirit.dynamicpack;
 
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
-import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
-import net.mehvahdjukaar.moonlight.api.resources.RecipeTemplate;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicServerResourceProvider;
 import net.mehvahdjukaar.moonlight.api.resources.pack.PackGenerationStrategy;
@@ -15,7 +13,6 @@ import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.item.crafting.Recipe;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,14 +43,14 @@ public class ServerDynamicResourcesHandler extends DynamicServerResourceProvider
         builder.addEntries(ModRegistry.SLED_ITEMS.values());
         sink.addTag(builder, Registries.ITEM);
 
-        ResourceLocation id = SnowySpirit.res("sled_oak");
-        Recipe<?> recipeTemplate = RPUtils.readRecipe(resourceManager, id);
+        ResourceLocation templateId = SnowySpirit.res("sled_oak");
 
         ModRegistry.SLED_ITEMS.forEach((w, b) -> {
             if (w != VanillaWoodTypes.OAK) {
-                var newR = RecipeTemplate.makeSimilarRecipe(recipeTemplate, VanillaWoodTypes.OAK, w,
+                //not addRecipe: this one carries over the template load conditions, so the generated
+                //sleds stay gated behind the sleds config just like the oak one
+                sink.addBlockTypeSwapRecipe(resourceManager, templateId, VanillaWoodTypes.OAK, w,
                         SnowySpirit.res("sled" + "_" + w.getTypeName()));
-                sink.addRecipe(newR);
             }
         });
     }

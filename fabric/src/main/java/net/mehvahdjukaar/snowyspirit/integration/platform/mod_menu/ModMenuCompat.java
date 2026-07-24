@@ -10,6 +10,6 @@ public class ModMenuCompat implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return parent -> MoonlightConfigSelectScreen.create(SnowySpirit.MOD_ID, parent,
-                SnowySpirit.res("textures/blocks/gingerbread_frosted_block.png"));
+                SnowySpirit.res("textures/block/gingerbread_frosted_block.png"));
     }
 }

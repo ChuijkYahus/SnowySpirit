@@ -23,7 +23,7 @@ dependencies {
     }
 
     modCompileOnly("curse.maven:yacl-667299:4574163")
-    modCompileOnly("com.terraformersmc:modmenu:4.0.6")
+    modCompileOnly("com.terraformersmc:modmenu:11.0.3")
     modCompileOnly("curse.maven:fabric-seasons-413523:4576886")
     modCompileOnly("curse.maven:farmers-delight-fabric-482834:4061213")
     modCompileOnly("curse.maven:entity-model-features-844662:8063559")

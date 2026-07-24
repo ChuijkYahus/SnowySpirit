@@ -1,1 +1,1 @@
-fixed a recipe condition
+- better configs
