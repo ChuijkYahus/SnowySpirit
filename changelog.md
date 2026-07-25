@@ -1,1 +1,1 @@
-- added loader version so neoforge doesnt complain
+- better configs

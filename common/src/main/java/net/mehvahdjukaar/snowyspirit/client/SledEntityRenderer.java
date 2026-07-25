@@ -125,7 +125,7 @@ public class SledEntityRenderer extends EntityRenderer<SledEntity> {
     public static final WoodType BAMBOO = WoodTypeRegistry.INSTANCE.get(ResourceLocation.tryParse("bamboo"));
 
     public SledModel<SledEntity> getModel(SledEntity sled){
-        return sled.getWoodType() == BAMBOO ? modelBamboo : model;
+        return sled.getWoodType().isBambooLike() ? modelBamboo : model;
     }
 
     private void renderDebugHitbox(PoseStack pMatrixStack, VertexConsumer pBuffer, SledEntity pEntity, float pPartialTicks) {
