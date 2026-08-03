@@ -87,7 +87,7 @@ public class CommonConfigs {
 
         builder.icon("gingerbread_cookie").push("blocks_and_items");
         GUMDROPS = contentFeature(builder.icon("gumdrop_red"), ModRegistry.GUMDROP_NAME);
-        GLOW_LIGHTS = contentFeature(builder.icon("glow_lights_white"), ModRegistry.GLOW_LIGHTS_NAME);
+        GLOW_LIGHTS = contentFeature(builder.icon("glow_lights_prismatic"), ModRegistry.GLOW_LIGHTS_NAME);
         CANDY_CANE = contentFeature(builder, ModRegistry.CANDY_CANE_NAME);
         GINGER = contentFeature(builder, ModRegistry.GINGER_NAME);
         EGGNOG = contentFeature(builder, ModRegistry.EGGNOG_NAME);

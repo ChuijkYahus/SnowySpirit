@@ -36,6 +36,7 @@ public class ClientRegistry {
         ClientHelper.addModelLoaderRegistration(ClientRegistry::registerModelLoaders);
         ClientHelper.addBlockColorsRegistration(ClientRegistry::registerBlockColors);
         ClientHelper.addParticleRegistration(ClientRegistry::registerParticles);
+        SeasonConfigOverlay.register();
     }
 
     private static void registerParticles(ClientHelper.ParticleEvent event) {
