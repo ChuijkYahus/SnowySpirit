@@ -31,6 +31,7 @@ import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -93,10 +94,22 @@ public class ContainerHolderEntity extends Entity implements Container, MenuProv
             if (innerBlockEntity == null) {
                 throw new IllegalStateException("block {} does not provide a valid container block entity");
             }
-            if (isContainerWithNBT(stack) && stack.hasFoil()) {
-                CompoundTag tag = stack.get(ModRegistry.CONTAINER_BLOCK_ENTITY_TAG.get());
-                if (tag != null) innerBlockEntity.loadWithComponents(tag, registryAccess());
-            }
+            loadContentsFromItem(stack);
+        }
+    }
+
+    // same two steps vanilla does when a container block is placed: BlockEntityTag first, then item components
+    private void loadContentsFromItem(ItemStack stack) {
+        CustomData blockEntityData = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        if (!blockEntityData.isEmpty()) {
+            innerBlockEntity.loadCustomOnly(blockEntityData.copyTag(), this.registryAccess());
+        }
+        innerBlockEntity.applyComponentsFromItemStack(stack);
+
+        //legacy: items dropped by older versions stored their contents in a component nothing ever read back
+        CompoundTag legacyTag = stack.get(ModRegistry.CONTAINER_BLOCK_ENTITY_TAG.get());
+        if (legacyTag != null) {
+            innerBlockEntity.loadWithComponents(legacyTag, this.registryAccess());
         }
     }
 
@@ -111,9 +124,9 @@ public class ContainerHolderEntity extends Entity implements Container, MenuProv
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         this.setContainerItem(ItemStack.OPTIONAL_CODEC.decode(NbtOps.INSTANCE, tag.getCompound("ContainerItem")).getOrThrow().getFirst());
-        if (innerBlockEntity == null) {
-            int aaa = 1;
-        } else innerBlockEntity.loadWithComponents(tag, this.registryAccess());
+        if (innerBlockEntity != null) {
+            innerBlockEntity.loadWithComponents(tag, this.registryAccess());
+        }
     }
 
     @Override
@@ -192,14 +205,15 @@ public class ContainerHolderEntity extends Entity implements Container, MenuProv
 
     public void spawnDrops() {
         ItemStack stack = this.getContainerItem().copy();
-        if (this.hasCustomName()) {
-            stack.set(DataComponents.CUSTOM_NAME, this.getCustomName());
-        }
-        //sacks and shulker. kind of ugly here
+        stack.remove(ModRegistry.CONTAINER_BLOCK_ENTITY_TAG.get());
+        //sacks and shulker keep their contents, everything else spills them
         if (isContainerWithNBT(this.getContainerItem())) {
-            stack.set(ModRegistry.CONTAINER_BLOCK_ENTITY_TAG.get(), innerBlockEntity.saveWithoutMetadata(this.registryAccess()));
+            innerBlockEntity.saveToItem(stack, this.registryAccess());
         } else {
             Containers.dropContents(this.level(), this, innerBlockEntity);
+        }
+        if (this.hasCustomName()) {
+            stack.set(DataComponents.CUSTOM_NAME, this.getCustomName());
         }
         this.spawnAtLocation(stack);
     }
