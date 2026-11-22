@@ -13,6 +13,7 @@ import java.util.Set;
 public class GingyCartwheelAttackGoal extends GingyCartwheelGoal {
 
     private final Set<LivingEntity> alreadyHit = new HashSet<>();
+    private int extraPasses;
 
     public GingyCartwheelAttackGoal(GingyEntity mob) {
         super(mob, true);
@@ -35,6 +36,9 @@ public class GingyCartwheelAttackGoal extends GingyCartwheelGoal {
         if (v.horizontalDistance() > rollDistance(1)) {
             this.spins = 2;
         }
+        this.extraPasses = spins - 1;
+
+        this.spins = 1;
 
         float facing = (float) MthUtils.getYaw(v);
         boolean rightSideAlreadyTurnedToIt = Mth.wrapDegrees(mob.yBodyRot - facing) < 0;
@@ -48,9 +52,23 @@ public class GingyCartwheelAttackGoal extends GingyCartwheelGoal {
         alreadyHit.clear();
     }
 
+
+    @Override
+    public boolean canContinueToUse() {
+        return super.canContinueToUse() || extraPasses > 0;
+    }
+
     @Override
     public void tick() {
         LivingEntity target = mob.getTarget();
+        if (rolling && !mob.isCartwheeling()) {
+            if (target == null || !rollAgainTowards(target.position())) {
+                extraPasses = 0;
+                return;
+            }
+            this.extraPasses--;
+            alreadyHit.clear();
+        }
         if (target != null) {
             aimRollAt(target.position(), 4);
         }

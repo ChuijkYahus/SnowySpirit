@@ -100,7 +100,7 @@ public class GingyEntityRenderer extends HumanoidMobRenderer<GingyEntity, GingyM
 
             float hop = GingyModel.hopWeight(limbSwingAmount, this.scale);
             float hopAngle = bob * (Mth.PI / GingyModel.HOP_TICKS);
-            float hopHeight = 2.5f / 16 * this.scale * hop * notCartwheeling;
+            float hopHeight =  4f / 16 * this.scale * hop * notCartwheeling;
             poseStack.translate(0, Mth.abs(Mth.sin(hopAngle)) * hopHeight, 0);
 
             float swayPower = 20 / this.scale * notCartwheeling * (1 - 0.5f * hop);

@@ -18,6 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -52,7 +53,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class GingyEntity extends AbstractGolem implements OwnableEntity {
+public class GingyEntity extends AbstractGolem implements OwnableEntity, NeutralMob {
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNER_UUID = SynchedEntityData.defineId(GingyEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     protected static final EntityDataAccessor<Byte> DATA_FLAGS = SynchedEntityData.defineId(GingyEntity.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Integer> DATA_COLOR = SynchedEntityData.defineId(GingyEntity.class, EntityDataSerializers.INT);
@@ -66,8 +67,8 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
     private static final int CARTWHEEL_FAST_BIT = 4;
     private static final byte CARTWHEEL_TURN_EVENT = 78;
     public static final float CARTWHEEL_RADIUS = 7.8f / 16;
-    private static final float ANGRY_SPEED_MULT = 1.3f;
-    private static final float ANGRY_CARTWHEEL_MULT = 2.2f;
+    private static final float ANGRY_SPEED_MULT = 1.45F;
+    private static final float ANGRY_CARTWHEEL_MULT = 2.5f;
 
     public static final float WALK_LEG_SWING = 0.8f;
 
@@ -76,6 +77,9 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
     private int cartwheelSpinCount = 1;
     private boolean cartwheelingFast;
     private int bodyLockTicks;
+    private int remainingPersistentAngerTime;
+    @Nullable
+    private UUID persistentAngerTarget;
 
     public GingyEntity(EntityType<? extends AbstractGolem> entityType, Level level) {
         super(entityType, level);
@@ -97,6 +101,11 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
             @Override
             public boolean canUse() {
                 return getOwnerUUID() == null && super.canUse();
+            }
+
+            @Override
+            public boolean canContinueToUse() {
+                return isAngry() && super.canContinueToUse();
             }
         });
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true, TARGET_SELECTOR));
@@ -137,6 +146,7 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
         if (bodyIntegrity != BodyIntegrity.FULL) {
             compound.putInt("Bites", bodyIntegrity.ordinal());
         }
+        this.addPersistentAngerSaveData(compound);
     }
 
     @Override
@@ -155,6 +165,7 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
         if (compound.contains("Bites", 99)) {
             this.setBodyIntegrity(BodyIntegrity.values()[(compound.getInt("Bites"))]);
         }
+        this.readPersistentAngerSaveData(this.level(), compound);
     }
 
 
@@ -325,6 +336,49 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
     }
 
     @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        //like bees. golems never forgive while you are around
+        this.updatePersistentAnger((ServerLevel) this.level(), false);
+    }
+
+
+    @Override
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(10 * 20);
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        boolean hurt = super.hurt(source, amount);
+        if (hurt && source.getEntity() instanceof LivingEntity attacker && this.isAngryAt(attacker)) {
+            this.startPersistentAngerTimer();
+        }
+        return hurt;
+    }
+
+    @Override
+    public int getRemainingPersistentAngerTime() {
+        return remainingPersistentAngerTime;
+    }
+
+
+    @Override
+    public void setRemainingPersistentAngerTime(int time) {
+        this.remainingPersistentAngerTime = time;
+    }
+
+    @Override
+    public @Nullable UUID getPersistentAngerTarget() {
+        return persistentAngerTarget;
+    }
+
+    @Override
+    public void setPersistentAngerTarget(@Nullable UUID target) {
+        this.persistentAngerTarget = target;
+    }
+
+    @Override
     public boolean canAttack(LivingEntity target) {
         return !this.isOwnedBy(target) && super.canAttack(target);
     }
@@ -464,6 +518,7 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
     public boolean doHurtTarget(Entity entity) {
         if (super.doHurtTarget(entity)) {
             this.healFromEating(entity);
+            return true;
         }
         return false;
     }
@@ -485,7 +540,7 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0)
-                .add(Attributes.ATTACK_DAMAGE, 0.75)
+                .add(Attributes.ATTACK_DAMAGE, 1)
                 .add(Attributes.ATTACK_KNOCKBACK, 0)
                 .add(Attributes.MOVEMENT_SPEED, 0.25);
     }

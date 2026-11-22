@@ -46,6 +46,7 @@ public class GingyChaseTargetGoal extends Goal {
     @Override
     public void tick() {
         LivingEntity target = mob.getTarget();
+        if (target == null) return;
         mob.getLookControl().setLookAt(target, 30, 30);
 
         float radius = 2 * mob.getBbHeight() ;
@@ -75,7 +76,7 @@ public class GingyChaseTargetGoal extends Goal {
         this.circlingTime++;
 
         if (hasGround) {
-            mob.getMoveControl().setWantedPosition(ahead.x, mob.getY(), ahead.z, 1);
+            mob.getMoveControl().setWantedPosition(ahead.x, mob.getY(), ahead.z, speedModifier);
         }
     }
 }

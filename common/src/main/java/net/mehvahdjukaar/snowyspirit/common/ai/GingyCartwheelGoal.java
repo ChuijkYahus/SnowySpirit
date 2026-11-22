@@ -107,6 +107,20 @@ public class GingyCartwheelGoal extends Goal {
         }
     }
 
+    protected boolean rollAgainTowards(Vec3 pos) {
+        boolean rolledPastIt = pos.subtract(mob.position()).dot(rollDirection) < 0;
+        if (rolledPastIt) {
+            this.rollRight = !rollRight;
+        }
+        if (!tryCartwheel(targetYaw)) {
+            return false;
+        }
+        this.rolling = false;
+        this.settleTicks = 0;
+        this.ticks = 0;
+        return true;
+    }
+
     private boolean canStandAt(AABB box) {
         Level level = mob.level();
         return !level.noCollision(mob, box.move(0, -1, 0)) && level.noCollision(mob, box) && !level.containsAnyLiquid(box);
