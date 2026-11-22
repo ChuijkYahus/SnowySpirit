@@ -6,6 +6,8 @@ import net.mehvahdjukaar.snowyspirit.common.ai.GingyCartwheelAttackGoal;
 import net.mehvahdjukaar.snowyspirit.common.ai.GingyCartwheelGoal;
 import net.mehvahdjukaar.snowyspirit.common.ai.GingyChaseTargetGoal;
 import net.mehvahdjukaar.snowyspirit.common.ai.GingyFollowOwnerGoal;
+import net.mehvahdjukaar.snowyspirit.common.ai.GingyNodeEvaluator;
+import net.mehvahdjukaar.snowyspirit.common.ai.GingyOpenDoorGoal;
 import net.mehvahdjukaar.snowyspirit.common.ai.GingySitWhenOrderedToGoal;
 import net.mehvahdjukaar.snowyspirit.reg.ModRegistry;
 import net.mehvahdjukaar.snowyspirit.reg.ModTags;
@@ -32,6 +34,8 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -41,6 +45,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.pathfinder.PathFinder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -80,6 +85,7 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new GingySitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(3, new GingyOpenDoorGoal(this));
         this.goalSelector.addGoal(4, new GingyCartwheelAttackGoal(this));
         this.goalSelector.addGoal(5, new GingyChaseTargetGoal(this, ANGRY_SPEED_MULT));
         this.goalSelector.addGoal(6, new GingyFollowOwnerGoal(this, 1.0, 7.0F, 3.5F, false));
@@ -95,6 +101,19 @@ public class GingyEntity extends AbstractGolem implements OwnableEntity {
         });
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true, TARGET_SELECTOR));
 
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        var nav = new GroundPathNavigation(this, level) {
+            @Override
+            protected PathFinder createPathFinder(int maxVisitedNodes) {
+                this.nodeEvaluator = new GingyNodeEvaluator();
+                return new PathFinder(this.nodeEvaluator, maxVisitedNodes);
+            }
+        };
+        nav.setCanOpenDoors(true);
+        return nav;
     }
 
     @Override
