@@ -41,7 +41,7 @@ public class GingyModel extends HumanoidModel<GingyEntity> {
 
     // legs are too short to keep up when chasing
     public static float hopWeight(float limbSwingAmount, float scale) {
-        return Mth.clamp((limbSwingAmount / scale - 0.65f) / 0.15f, 0, 1);
+        return Mth.clamp((limbSwingAmount / scale - 0.58f) / 0.1f, 0, 1);
     }
 
     @Override

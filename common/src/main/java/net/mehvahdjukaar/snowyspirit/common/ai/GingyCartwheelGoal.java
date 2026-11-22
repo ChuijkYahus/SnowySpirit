@@ -75,8 +75,10 @@ public class GingyCartwheelGoal extends Goal {
         double distance = rollDistance(spins);
 
         AABB box = mob.getBoundingBox();
+        AABB end = box.move(dir.scale(distance));
+        boolean canDropOnto = mob.level().noCollision(mob, end) && canStandAt(end.move(0, -1, 0));
 
-        if (mob.level().noCollision(mob, box.move(dir.scale(distance * 0.5))) && canStandAt(box.move(dir.scale(distance)))) {
+        if (mob.level().noCollision(mob, box.move(dir.scale(distance * 0.5))) && (canStandAt(end) || canDropOnto)) {
             this.targetYaw = yaw;
             this.rollDirection = dir;
             this.rollDistance = distance;
