@@ -23,7 +23,7 @@ public class GingyCartwheelAttackGoal extends GingyCartwheelGoal {
     public boolean canUse() {
         LivingEntity target = mob.getTarget();
         if (target == null || !target.isAlive() || !canCartwheel()) return false;
-        if (mob.getRandom().nextInt(reducedTickDelay(30)) != 0) {
+        if (mob.getRandom().nextInt(reducedTickDelay(35)) != 0) {
             return false;
         }
         randomizeSpinsAndSide();
